@@ -63,15 +63,27 @@ body {
 /* Logo styles */
 .logo a {
     text-decoration: none;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-image {
+    height: 40px;
+    width: auto;
+}
+
+.logo-text-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
 }
 
 .logo-text {
     display: flex;
     align-items: baseline;
-    margin-bottom: 2px;
 }
 
 .company-name {
@@ -117,12 +129,24 @@ body {
 }
 
 @media (max-width: 768px) {
-    .logo-text {
-        margin-bottom: 0;
+    .logo-container {
+            gap: 6px;
+        }
+    
+        .logo-image {
+            height: 32px;
     }
     
     .logo-text-jp {
-        display: none;
+        font-size: 10px;
+        }
+        
+        .company-name {
+            font-size: 20px;
+        }
+        
+        .company-type {
+            font-size: 12px;
     }
 }
 
