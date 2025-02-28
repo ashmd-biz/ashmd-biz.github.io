@@ -824,3 +824,8 @@ body {
         font-size: 0.85rem;
     }
 }
+/* About Section スタイル */
+.about {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
