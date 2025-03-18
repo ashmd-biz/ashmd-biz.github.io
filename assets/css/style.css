@@ -545,7 +545,7 @@ body {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,.form-group select {
     width: 100%;
     padding: 12px;
     border: 1px solid #e5e7eb;
@@ -829,3 +829,177 @@ body {
     background-color: #f8f9fa;
     padding: 80px 0;
 }
+    /* 実績セクションのスタイル */
+    .works {
+        padding: 80px 0;
+        background-color: #f9f9f9;
+      }
+      
+      .works-intro {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      
+      .works-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 30px;
+        margin-bottom: 50px;
+      }
+      
+      .work-card {
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .work-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      
+      .work-image {
+        height: 200px;
+        overflow: hidden;
+      }
+      
+      .work-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+      
+      .work-card:hover .work-image img {
+        transform: scale(1.05);
+      }
+      
+      .work-content {
+        padding: 20px;
+      }
+      
+      .work-category {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 600;
+        color: #fff;
+        background: #4a6cf7;
+        padding: 4px 10px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+      }
+      
+      .work-content h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #333;
+      }
+      
+      .work-content p {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.6;
+      }
+      
+      .works-cta {
+        text-align: center;
+      }
+      
+      .works-cta p {
+        margin-bottom: 20px;
+      }
+      
+      /* お問い合わせセクションの改善 */
+      .contact-benefits {
+        margin-top: 30px;
+        background: #f5f9ff;
+        padding: 20px;
+        border-radius: 8px;
+      }
+      
+      .contact-benefits h4 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 15px;
+      }
+      
+      .contact-benefits ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .contact-benefits li {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: flex-start;
+      }
+      
+      .contact-benefits li i {
+        color: #4a6cf7;
+        margin-right: 10px;
+        margin-top: 4px;
+      }
+      
+      /* ヒーローセクションの改善 */
+      .hero-description strong {
+        color: #4a6cf7;
+        font-weight: 700;
+      }
+      
+      /* CTA ボタンの強調 */
+      .btn.btn-primary {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        transition: all 0.5s ease;
+      }
+      
+      .btn.btn-primary:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: all 0.5s ease;
+        z-index: -1;
+      }
+      
+      .btn.btn-primary:hover:before {
+        left: 0;
+      }
+      
+      /* フッターの改善 */
+      .footer-contact {
+        margin-top: 15px;
+      }
+      
+      .footer-contact p {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      
+      .footer-contact p i {
+        margin-right: 10px;
+        color: #4a6cf7;
+      }
+      
+      /* レスポンシブ改善 */
+      @media (max-width: 768px) {
+        .works-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .hero h1 {
+          font-size: 2rem;
+        }
+        
+        .hero-description {
+          font-size: 1rem;
+        }
+      }
+  
