@@ -441,7 +441,6 @@
           <ul>
             <li><a href="#services">サービス内容</a></li>
             <li><a href="#about">会社概要</a></li>
-            <li><a href="#works">開発実績</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
           </ul>
         </div>
@@ -545,9 +544,43 @@
       const scrolled = window.pageYOffset;
       const parallaxBg = document.querySelector(".parallax-bg");
       if (parallaxBg) {
-        parallaxBg.style.transform = `translateY(${scrolled * 0.5}px)`;
+        const parentElement = parallaxBg.parentElement;
+        if (parentElement) {
+          const parentRect = parentElement.getBoundingClientRect();
+          const parentTop = parentRect.top + scrolled;
+          const parentHeight = parentElement.offsetHeight;
+          
+          // Only apply parallax if the element is in view
+          if (scrolled >= parentTop - window.innerHeight && scrolled <= parentTop + parentHeight) {
+            const parallaxOffset = (scrolled - parentTop) * 0.5;
+            parallaxBg.style.transform = `translateY(${parallaxOffset}px)`;
+          }
+        }
       }
     });
+    
+    // Prevent scrolling beyond the page
+    let isScrolling = false;
+    window.addEventListener("scroll", () => {
+      if (isScrolling) return;
+      
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const documentHeight = document.documentElement.scrollHeight;
+      const windowHeight = window.innerHeight;
+      const maxScroll = Math.max(0, documentHeight - windowHeight);
+      
+      // If scrolled beyond the maximum, reset to maximum
+      if (scrollTop > maxScroll + 50) {
+        isScrolling = true;
+        window.scrollTo({
+          top: maxScroll,
+          behavior: 'auto'
+        });
+        setTimeout(() => {
+          isScrolling = false;
+        }, 100);
+      }
+    }, { passive: true });
 
     // Form validation and animation
     // const form = document.getElementById('contactForm');
