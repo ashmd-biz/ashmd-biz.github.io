@@ -45,6 +45,12 @@ body {
     transition: var(--transition);
 }
 
+.header.at-top {
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+}
+
 .nav {
     display: flex;
     justify-content: space-between;
@@ -129,24 +135,32 @@ body {
 }
 
 @media (max-width: 768px) {
-    .logo-container {
-            gap: 6px;
-        }
+    header .container {
+        margin: 20px auto;
+    }
     
-        .logo-image {
-            height: 32px;
+    .nav {
+        justify-content: center;
+    }
+    
+    .logo-container {
+        gap: 8px;
+    }
+    
+    .logo-image {
+        height: 40px;
     }
     
     .logo-text-jp {
-        font-size: 10px;
-        }
+        font-size: 12px;
+    }
         
-        .company-name {
-            font-size: 20px;
-        }
+    .company-name {
+        font-size: 24px;
+    }
         
-        .company-type {
-            font-size: 12px;
+    .company-type {
+        font-size: 14px;
     }
 }
 
@@ -692,6 +706,10 @@ body {
 @media (max-width: 768px) {
     .nav-links {
         display: none;
+    }
+    
+    .hero {
+        padding: 120px 0 80px;
     }
     
     .hero h1 {

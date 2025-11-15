@@ -527,11 +527,27 @@
       });
     });
 
+    // Header transparency on scroll
+    const header = document.querySelector(".header");
+    function handleScroll() {
+      if (window.pageYOffset === 0) {
+        header.classList.add("at-top");
+      } else {
+        header.classList.remove("at-top");
+      }
+    }
+    
+    // Set initial state
+    handleScroll();
+    
     // Parallax effect
     window.addEventListener("scroll", () => {
+      handleScroll();
       const scrolled = window.pageYOffset;
       const parallaxBg = document.querySelector(".parallax-bg");
-      parallaxBg.style.transform = `translateY(${scrolled * 0.5}px)`;
+      if (parallaxBg) {
+        parallaxBg.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
     });
 
     // Form validation and animation
@@ -579,10 +595,12 @@
     const menuToggle = document.querySelector(".menu-toggle");
     const navLinks = document.querySelector(".nav-links");
 
-    menuToggle.addEventListener("click", () => {
-      menuToggle.classList.toggle("active");
-      navLinks.classList.toggle("active");
-    });
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        navLinks.classList.toggle("active");
+      });
+    }
   </script>
 </body>
 
