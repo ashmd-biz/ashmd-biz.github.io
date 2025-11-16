@@ -73,10 +73,10 @@
       <div class="container">
         <div class="hero-content" data-aos="fade-up">
           <h1>
-            <span class="highlight">AI・システム開発</span>でビジネスの成長を加速する
+            <span class="highlight">AI・システム開発でビジネスの成長を加速する</span>
           </h1>
           <p class="hero-description">
-            Shopify/EC-CUBE構築から予約システム、AI活用まで。創業8年、<strong>導入実績100件以上</strong>の実績を持つ株式会社アシュマドが、貴社のビジネス課題を最適なIT技術で解決します。
+            Shopify/EC-CUBE構築から予約システム、AI活用まで。創業8年、導入実績100件以上の実績を持つ株式会社アシュマドが、貴社のビジネス課題を最適なIT技術で解決します。
           </p>
           <div class="hero-buttons">
             <a href="#contact" class="btn btn-primary">
@@ -568,6 +568,35 @@
     
     // Set initial state
     handleScroll();
+    
+    // Typewriter effect for .highlight
+    const highlightElement = document.querySelector(".hero .highlight");
+    if (highlightElement) {
+      const text = highlightElement.textContent;
+      highlightElement.textContent = "";
+      highlightElement.style.borderRight = "2px solid var(--accent-color)";
+      highlightElement.style.paddingRight = "4px";
+      highlightElement.style.animation = "blink 1s infinite";
+      
+      let index = 0;
+      function typeWriter() {
+        if (index < text.length) {
+          highlightElement.textContent += text.charAt(index);
+          index++;
+          setTimeout(typeWriter, 100);
+        } else {
+          // Remove cursor after typing is complete
+          setTimeout(() => {
+            highlightElement.style.borderRight = "none";
+            highlightElement.style.paddingRight = "0";
+            highlightElement.style.animation = "none";
+          }, 500);
+        }
+      }
+      
+      // Start typing after a short delay
+      setTimeout(typeWriter, 500);
+    }
     
     // Parallax effect
     window.addEventListener("scroll", () => {
