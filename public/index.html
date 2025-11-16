@@ -454,6 +454,7 @@
   </main>
 
   <footer class="footer">
+    <canvas id="footer-canvas" class="footer-canvas"></canvas>
     <div class="container">
       <div class="footer-content">
         <div class="footer-info">
@@ -662,6 +663,182 @@
         menuToggle.classList.toggle("active");
         navLinks.classList.toggle("active");
       });
+    }
+
+    // Footer cybernetic geometric pattern with animation
+    const footerCanvas = document.getElementById('footer-canvas');
+    if (footerCanvas) {
+      const ctx = footerCanvas.getContext('2d');
+      const footer = document.querySelector('.footer');
+      let animationId;
+      let particles = [];
+      let mouse = { x: 0, y: 0 };
+      
+      function resizeCanvas() {
+        if (footer) {
+          const rect = footer.getBoundingClientRect();
+          footerCanvas.width = rect.width;
+          footerCanvas.height = rect.height;
+          initParticles();
+        }
+      }
+      
+      function initParticles() {
+        const width = footerCanvas.width;
+        const height = footerCanvas.height;
+        particles = [];
+        
+        // Create particles
+        for (let i = 0; i < 50; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            radius: Math.random() * 2 + 1,
+            opacity: Math.random() * 0.5 + 0.2
+          });
+        }
+      }
+      
+      function drawPattern() {
+        const width = footerCanvas.width;
+        const height = footerCanvas.height;
+        
+        ctx.clearRect(0, 0, width, height);
+        ctx.strokeStyle = '#FFD700';
+        ctx.fillStyle = '#FFD700';
+        ctx.lineWidth = 1;
+        
+        // Grid pattern with subtle animation
+        const gridSize = 40;
+        const time = Date.now() * 0.001;
+        ctx.globalAlpha = 0.15;
+        for (let x = 0; x < width; x += gridSize) {
+          const offset = Math.sin(time + x * 0.01) * 2;
+          ctx.beginPath();
+          ctx.moveTo(x + offset, 0);
+          ctx.lineTo(x + offset, height);
+          ctx.stroke();
+        }
+        for (let y = 0; y < height; y += gridSize) {
+          const offset = Math.cos(time + y * 0.01) * 2;
+          ctx.beginPath();
+          ctx.moveTo(0, y + offset);
+          ctx.lineTo(width, y + offset);
+          ctx.stroke();
+        }
+        
+        // Animated hexagonal pattern
+        ctx.globalAlpha = 0.25;
+        const hexSize = 30;
+        const hexRows = Math.ceil(height / (hexSize * Math.sqrt(3))) + 1;
+        const hexCols = Math.ceil(width / (hexSize * 1.5)) + 1;
+        const hexTime = Date.now() * 0.0005;
+        
+        for (let row = 0; row < hexRows; row++) {
+          for (let col = 0; col < hexCols; col++) {
+            const x = col * hexSize * 1.5;
+            const y = row * hexSize * Math.sqrt(3) + (col % 2) * hexSize * Math.sqrt(3) / 2;
+            const pulse = Math.sin(hexTime + (row + col) * 0.1) * 2;
+            
+            if (x < width + hexSize && y < height + hexSize) {
+              drawHexagon(ctx, x, y, hexSize + pulse);
+            }
+          }
+        }
+        
+        // Update and draw particles
+        ctx.globalAlpha = 1;
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          
+          // Update position
+          p.x += p.vx;
+          p.y += p.vy;
+          
+          // Bounce off edges
+          if (p.x < 0 || p.x > width) p.vx *= -1;
+          if (p.y < 0 || p.y > height) p.vy *= -1;
+          
+          // Keep particles in bounds
+          p.x = Math.max(0, Math.min(width, p.x));
+          p.y = Math.max(0, Math.min(height, p.y));
+          
+          // Mouse interaction
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 100) {
+            const force = (100 - distance) / 100;
+            p.vx -= (dx / distance) * force * 0.05;
+            p.vy -= (dy / distance) * force * 0.05;
+          }
+          
+          // Draw particle
+          ctx.globalAlpha = p.opacity;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        
+        // Draw connecting lines between nearby particles
+        ctx.globalAlpha = 0.2;
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 150) {
+              const opacity = (1 - distance / 150) * 0.3;
+              ctx.globalAlpha = opacity;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+      }
+      
+      function drawHexagon(ctx, x, y, size) {
+        ctx.beginPath();
+        for (let i = 0; i < 6; i++) {
+          const angle = (Math.PI / 3) * i;
+          const hx = x + size * Math.cos(angle);
+          const hy = y + size * Math.sin(angle);
+          if (i === 0) {
+            ctx.moveTo(hx, hy);
+          } else {
+            ctx.lineTo(hx, hy);
+          }
+        }
+        ctx.closePath();
+        ctx.stroke();
+      }
+      
+      // Mouse tracking
+      footerCanvas.addEventListener('mousemove', (e) => {
+        const rect = footerCanvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+      
+      footerCanvas.addEventListener('mouseleave', () => {
+        mouse.x = -1000;
+        mouse.y = -1000;
+      });
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      // Animate
+      function animate() {
+        drawPattern();
+        animationId = requestAnimationFrame(animate);
+      }
+      animate();
     }
   </script>
 </body>
