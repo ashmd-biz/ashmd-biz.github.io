@@ -699,25 +699,6 @@
           ctx.stroke();
         }
         
-        // Animated hexagonal pattern
-        ctx.globalAlpha = 0.25;
-        const hexSize = 30;
-        const hexRows = Math.ceil(height / (hexSize * Math.sqrt(3))) + 1;
-        const hexCols = Math.ceil(width / (hexSize * 1.5)) + 1;
-        const hexTime = Date.now() * 0.0005;
-        
-        for (let row = 0; row < hexRows; row++) {
-          for (let col = 0; col < hexCols; col++) {
-            const x = col * hexSize * 1.5;
-            const y = row * hexSize * Math.sqrt(3) + (col % 2) * hexSize * Math.sqrt(3) / 2;
-            const pulse = Math.sin(hexTime + (row + col) * 0.1) * 2;
-            
-            if (x < width + hexSize && y < height + hexSize) {
-              drawHexagon(ctx, x, y, hexSize + pulse);
-            }
-          }
-        }
-        
         // Update and draw particles
         ctx.globalAlpha = 1;
         for (let i = 0; i < particles.length; i++) {
@@ -770,22 +751,6 @@
             }
           }
         }
-      }
-      
-      function drawHexagon(ctx, x, y, size) {
-        ctx.beginPath();
-        for (let i = 0; i < 6; i++) {
-          const angle = (Math.PI / 3) * i;
-          const hx = x + size * Math.cos(angle);
-          const hy = y + size * Math.sin(angle);
-          if (i === 0) {
-            ctx.moveTo(hx, hy);
-          } else {
-            ctx.lineTo(hx, hy);
-          }
-        }
-        ctx.closePath();
-        ctx.stroke();
       }
       
       // Mouse tracking
