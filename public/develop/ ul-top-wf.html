@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNIMAT LIFE - リデザイン案ワイヤーフレーム</title>
+<style>
+    /* ベーススタイル */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        color: #333;
+        line-height: 2.0;
+        background-color: #fff;
+    }
+    
+    /* 共通クラス */
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    .btn {
+        display: inline-block;
+        padding: 15px 40px;
+        border: 1px solid #333;
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+        transition: 0.3s;
+        letter-spacing: 0.1em;
+    }
+    .btn:hover {
+        background: #333;
+        color: #fff;
+    }
+
+    /* ヘッダー */
+    header {
+        position: fixed;
+        width: 100%;
+        height: 80px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 40px;
+        box-sizing: border-box;
+        background: rgba(255,255,255,0.9);
+        z-index: 1000;
+        border-bottom: 1px solid #eee;
+    }
+    .logo { font-weight: bold; font-size: 20px; letter-spacing: 0.05em; position: relative; z-index: 1001; }
+    
+    /* ハンバーガーメニューボタン */
+    .menu-trigger {
+        cursor: pointer;
+        position: relative;
+        width: 30px;
+        height: 20px;
+        z-index: 1001;
+    }
+    .menu-trigger span {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #333;
+        transition: all 0.4s;
+    }
+    .menu-trigger span:nth-of-type(1) { top: 0; }
+    .menu-trigger span:nth-of-type(2) { top: 9px; }
+    .menu-trigger span:nth-of-type(3) { bottom: 0; }
+    
+    .menu-trigger.active span:nth-of-type(1) { transform: translateY(9px) rotate(45deg); }
+    .menu-trigger.active span:nth-of-type(2) { opacity: 0; }
+    .menu-trigger.active span:nth-of-type(3) { transform: translateY(-9px) rotate(-45deg); }
+
+    /* 全画面メニュー */
+    .global-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(255,255,255,0.98);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s, visibility 0.4s;
+        overflow-y: auto;
+    }
+    .global-menu.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    .menu-container {
+        max-width: 1000px;
+        margin: 100px auto;
+        padding: 0 40px 60px;
+        text-align: center;
+    }
+    .global-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .menu-item {
+        margin: 0;
+        border-bottom: 1px solid #eee;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s, transform 0.4s;
+    }
+    .global-menu.active .menu-item {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* 順次表示アニメーション */
+    .global-menu.active .menu-item:nth-child(1) { transition-delay: 0.1s; }
+    .global-menu.active .menu-item:nth-child(2) { transition-delay: 0.15s; }
+    .global-menu.active .menu-item:nth-child(3) { transition-delay: 0.2s; }
+    .global-menu.active .menu-item:nth-child(4) { transition-delay: 0.25s; }
+    .global-menu.active .menu-item:nth-child(5) { transition-delay: 0.3s; }
+    .global-menu.active .menu-item:nth-child(6) { transition-delay: 0.35s; }
+
+    .menu-link, .menu-toggle {
+        font-size: 24px;
+        color: #333;
+        text-decoration: none;
+        letter-spacing: 0.1em;
+        font-weight: 300;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 10px;
+        cursor: pointer;
+        position: relative;
+        line-height: 1.2;
+    }
+    .menu-link:hover, .menu-toggle:hover {
+        background-color: #f9f9f9;
+    }
+    .sub-text {
+        font-size: 11px;
+        color: #999;
+        letter-spacing: 0.05em;
+        margin-top: 5px;
+        display: block;
+    }
+    
+    /* サブメニュー開閉アイコン */
+    .menu-toggle::after {
+        content: '+';
+        font-size: 20px;
+        font-weight: 300;
+        transition: transform 0.3s;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .menu-toggle.open::after {
+        transform: translateY(-50%) rotate(45deg);
+    }
+
+    /* サブメニュー */
+    .sub-menu {
+        height: 0;
+        overflow: hidden;
+        transition: height 0.4s ease;
+        background-color: #fafafa;
+        text-align: left;
+    }
+    /* PC表示時の2列化 */
+    @media (min-width: 769px) {
+        /* 開いた状態（is-openクラスが付与されたとき）のみgridを適用 */
+        .sub-menu.is-open {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 40px;
+            padding: 20px 40px;
+            height: auto !important; /* JSのheight計算を上書き */
+            border-bottom: 1px solid #eee; /* 開いたときの下線 */
+        }
+    }
+    .sub-menu li {
+        margin: 0;
+        border-bottom: 1px dashed #eee;
+    }
+    .sub-menu li:last-child {
+        border-bottom: none;
+    }
+    .sub-menu a {
+        display: block;
+        padding: 15px 30px;
+        font-size: 15px;
+        color: #555;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+    .sub-menu a:hover {
+        color: #000;
+        padding-left: 35px;
+    }
+
+    /* メインビジュアル */
+    .hero {
+        height: 100vh;
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+    }
+    .hero h1 {
+        font-size: 42px;
+        font-weight: normal;
+        margin-bottom: 20px;
+        letter-spacing: 0.1em;
+    }
+    .hero p {
+        font-size: 16px;
+        color: #666;
+        letter-spacing: 0.2em;
+    }
+    .scroll-down {
+        position: absolute;
+        bottom: 50px;
+        font-size: 12px;
+        letter-spacing: 0.2em;
+        animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(10px); }
+    }
+
+    /* コンセプト */
+    .concept {
+        padding: 160px 0;
+        text-align: center;
+    }
+    .concept p {
+        font-size: 24px;
+        font-weight: 300;
+    }
+
+    /* サービス */
+    .service-section {
+        padding-bottom: 160px;
+    }
+    .service-header {
+        text-align: center;
+        margin-bottom: 100px;
+    }
+    .service-header h2 {
+        font-size: 36px;
+        margin: 0 0 10px;
+        font-weight: normal;
+        letter-spacing: 0.1em;
+    }
+    .service-header span {
+        color: #999;
+        font-size: 14px;
+        letter-spacing: 0.1em;
+        display: block;
+    }
+    .service-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 120px;
+        gap: 80px;
+    }
+    .service-item:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+    .service-img {
+        flex: 1;
+        height: 400px;
+        background-color: #ddd;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #888;
+        font-weight: bold;
+    }
+    .service-text {
+        flex: 1;
+    }
+    .service-num {
+        display: block;
+        font-size: 14px;
+        color: #999;
+        margin-bottom: 20px;
+        font-family: serif;
+    }
+    .service-title {
+        font-size: 32px;
+        margin-bottom: 30px;
+        font-weight: normal;
+        letter-spacing: 0.05em;
+    }
+    .service-desc {
+        margin-bottom: 40px;
+        color: #666;
+    }
+
+    /* ニュース */
+    .news {
+        background-color: #fafafa;
+        padding: 80px 0;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 160px;
+    }
+    .news h2 {
+        text-align: center;
+        font-size: 24px;
+        margin: 0 0 10px;
+        font-weight: normal;
+        letter-spacing: 0.1em;
+    }
+    .news-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .news-header span {
+        color: #999;
+        font-size: 14px;
+        letter-spacing: 0.1em;
+        display: block;
+    }
+    .news-list {
+        max-width: 800px;
+        margin: 0 auto;
+        list-style: none;
+        padding: 0;
+    }
+    .news-list li {
+        border-bottom: 1px solid #ddd;
+        padding: 20px 0;
+        display: flex;
+        gap: 30px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .news-list li:hover {
+        opacity: 0.6;
+    }
+    .date { font-size: 14px; color: #888; }
+    .title { font-size: 16px; }
+
+    /* 汎用リンクグリッド */
+    .useful-section {
+        padding: 80px 0;
+        background-color: #f4f4f4; /* 背景色を少し濃くしてエリアを区切る */
+    }
+    .useful-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    .useful-item {
+        background: #fff; /* アイテムは白背景に */
+        border: 1px solid #eee;
+        padding: 40px 20px;
+        text-align: center;
+        text-decoration: none;
+        color: #333;
+        transition: 0.3s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 160px;
+    }
+    .useful-item:hover {
+        background: #333;
+        color: #fff;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .useful-title {
+        font-size: 16px;
+        letter-spacing: 0.05em;
+    }
+    .useful-sub {
+        font-size: 11px;
+        color: #999;
+        margin-top: 5px;
+        letter-spacing: 0.1em;
+    }
+    .useful-item:hover .useful-sub {
+        color: #ccc;
+    }
+
+    /* キャンペーンエリア */
+    .campaign-section {
+        padding: 100px 0;
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
+    }
+    .campaign-container {
+        max-width: 800px; /* 画像を大きく見せるため、あえて少し幅を絞るか、あるいは1000pxのままか。ここではテキストの読みやすさも考慮しつつ全体はコンテナ幅 */
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    .campaign-banner {
+        display: block;
+        text-decoration: none;
+        color: #333;
+        transition: opacity 0.3s;
+    }
+    .campaign-banner:hover {
+        opacity: 0.8;
+    }
+    .campaign-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .campaign-header h3 {
+        font-size: 32px;
+        margin: 0 0 10px;
+        font-weight: normal;
+        letter-spacing: 0.1em;
+    }
+    .campaign-header span {
+        color: #999;
+        font-size: 14px;
+        letter-spacing: 0.1em;
+        display: block;
+    }
+    .campaign-image {
+        width: 100%;
+        height: 400px;
+        background-color: #eee;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #999;
+        font-size: 24px;
+        margin-bottom: 40px;
+        font-weight: bold;
+    }
+    .campaign-text {
+        text-align: center;
+    }
+    .campaign-text p {
+        font-size: 16px;
+        color: #666;
+        margin: 0;
+        font-weight: 300;
+        letter-spacing: 0.05em;
+        line-height: 2.0;
+    }
+
+    /* 事業バナーセクション */
+    .promo-section {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        overflow-x: hidden;
+        border-top: 1px solid #ddd;
+    }
+    .promo-banner {
+        width: 50%;
+        height: 240px;
+        position: relative;
+        text-decoration: none;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        box-sizing: border-box;
+        margin: 0;
+        border-bottom: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        background-color: #fff;
+        transition: background-color 0.3s;
+    }
+    .promo-banner:nth-child(even) {
+        border-right: none;
+    }
+    .promo-banner:hover {
+        background-color: #f9f9f9;
+        z-index: 1;
+    }
+    
+    .promo-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+    .promo-content h3 {
+        font-size: 24px;
+        margin: 0 0 10px;
+        letter-spacing: 0.1em;
+        font-weight: normal;
+        color: #333;
+    }
+    .promo-content p {
+        font-size: 13px;
+        margin: 0 0 20px;
+        color: #666;
+        font-weight: 300;
+    }
+    .promo-arrow {
+        font-size: 18px;
+        display: inline-block;
+        transition: transform 0.3s;
+        color: #999;
+    }
+    .promo-banner:hover .promo-arrow {
+        transform: translateX(10px);
+        color: #333;
+    }
+
+    /* フッター */
+    footer {
+        background-color: #222;
+        color: #fff;
+        padding: 80px 0 40px;
+        font-size: 13px;
+    }
+    .footer-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 40px;
+    }
+    .footer-col {
+        flex: 1;
+        min-width: 200px;
+    }
+    .footer-col h3 {
+        font-size: 14px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #444;
+        letter-spacing: 0.1em;
+        font-weight: normal;
+        color: #999;
+    }
+    .footer-col ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .footer-col li {
+        margin-bottom: 12px;
+    }
+    .footer-col a {
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.7;
+        transition: 0.3s;
+        display: block;
+    }
+    .footer-col a:hover {
+        opacity: 1;
+        padding-left: 5px;
+    }
+    .copyright {
+        text-align: center;
+        margin-top: 60px;
+        padding-top: 20px;
+        border-top: 1px solid #333;
+        color: #666;
+        font-size: 11px;
+        letter-spacing: 0.05em;
+    }
+
+    /* スマホ対応 */
+    @media (max-width: 768px) {
+        .hero h1 { font-size: 28px; }
+        .concept p { font-size: 18px; text-align: left; padding: 0 20px; }
+        .service-item { flex-direction: column !important; gap: 30px; margin-bottom: 80px; align-items: flex-start !important; }
+        .service-text { width: 100%; }
+        .service-img { width: 100%; height: 400px !important; flex: none; }
+        header { padding: 0 20px; }
+        
+        .footer-container { flex-direction: column; gap: 40px; }
+        .footer-col { border-bottom: 1px solid #333; padding-bottom: 20px; }
+        .footer-col:last-child { border-bottom: none; }
+        .footer-col h3 { border-bottom: none; color: #fff; font-size: 16px; margin-bottom: 15px; }
+        
+        .promo-section { display: block; }
+        .promo-banner { 
+            width: 100% !important; 
+            height: 200px; 
+            margin: 0 !important; 
+            padding: 0 !important; 
+        }
+        .promo-banner:nth-child(odd), 
+        .promo-banner:nth-child(even) {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        .useful-grid { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">UNIMAT LIFE</div>
+    <div class="menu-trigger" id="menuTrigger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</header>
+
+<nav class="global-menu" id="globalMenu">
+    <div class="menu-container">
+        <ul>
+            <li class="menu-item"><a href="#" class="menu-link">TOP<span class="sub-text">トップ</span></a></li>
+            
+            <li class="menu-item">
+                <div class="menu-toggle">CONCEPT<span class="sub-text">コンセプト</span></div>
+                <ul class="sub-menu">
+                    <li><a href="#">企業理念</a></li>
+                    <li><a href="#">代表メッセージ</a></li>
+                    <li><a href="#">私たちの強み</a></li>
+                    <li><a href="#">SDGsへの取り組み</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-toggle">SERVICE<span class="sub-text">事業内容</span></div>
+                <ul class="sub-menu">
+                    <li><a href="#">オフィスコーヒーサービス</a></li>
+                    <li><a href="#">環境美化用品レンタル</a></li>
+                    <li><a href="#">調剤薬局事業</a></li>
+                    <li><a href="#">フラワーレンタル</a></li>
+                    <li><a href="#">ミネラルウォーター</a></li>
+                    <li><a href="#">オフィス・店舗清掃</a></li>
+                    <li><a href="#">ゴルフ場レストラン受託</a></li>
+                    <li><a href="#">売店・コンビニ運営</a></li>
+                    <li><a href="#">会議室・イベントホール運営</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-toggle">NEWS<span class="sub-text">お知らせ</span></div>
+                <ul class="sub-menu">
+                    <li><a href="#">プレスリリース</a></li>
+                    <li><a href="#">新着情報</a></li>
+                    <li><a href="#">イベント情報</a></li>
+                    <li><a href="#">メディア掲載</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-toggle">COMPANY<span class="sub-text">企業情報</span></div>
+                <ul class="sub-menu">
+                    <li><a href="#">会社概要</a></li>
+                    <li><a href="#">役員一覧</a></li>
+                    <li><a href="#">沿革</a></li>
+                    <li><a href="#">組織図</a></li>
+                    <li><a href="#">事業所一覧</a></li>
+                    <li><a href="#">グループ企業</a></li>
+                    <li><a href="#">電子公告</a></li>
+                </ul>
+            </li>
+            
+            <li class="menu-item"><a href="#" class="menu-link">RECRUIT<span class="sub-text">採用情報</span></a></li>
+            <li class="menu-item"><a href="#" class="menu-link">CONTACT<span class="sub-text">お問い合わせ</span></a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="hero">
+    <h1>暮らしの中にゆとりと、やすらぎを</h1>
+    <p>To provide relaxation and comfort</p>
+    <div class="scroll-down">▼ SCROLL</div>
+</section>
+
+<section class="concept container">
+    <p>ユニマットライフは、オフィスからご家庭まで<br>
+    「ゆとり」と「やすらぎ」をお届けする企業です。<br>
+    お客様一人ひとりの空間に寄り添い、<br>
+    心地よい時間を作り出します。</p>
+</section>
+
+<section class="news">
+    <div class="container">
+        <div class="news-header">
+            <h2>NEWS & TOPICS</h2>
+            <span>お知らせ</span>
+        </div>
+        <ul class="news-list">
+            <li><span class="date">2025.10.01</span><span class="title">新商品「プレミアムブレンド」の取り扱いを開始しました</span></li>
+            <li><span class="date">2025.09.15</span><span class="title">採用情報を更新しました（2026年度新卒採用）</span></li>
+            <li><span class="date">2025.08.01</span><span class="title">夏季休業期間のお知らせ</span></li>
+        </ul>
+        <div style="text-align:center; margin-top:40px;">
+            <a href="#" class="btn" style="border-color:#ccc; color:#666;">一覧を見る</a>
+        </div>
+    </div>
+</section>
+
+<section class="service-section container">
+    
+    <div class="service-header">
+        <h2>SERVICE</h2>
+        <span>事業紹介</span>
+    </div>
+
+    <div class="service-item">
+        <div class="service-img">IMAGE: Office Coffee</div>
+        <div class="service-text">
+            <span class="service-num">01. Office Coffee Service</span>
+            <h2 class="service-title">オフィスコーヒーサービス</h2>
+            <p class="service-desc">
+                一杯のコーヒーが、オフィスの空気を変える。<br>
+                サーバーの設置から豆の補充まで、<br>
+                手間をかけずに本格的なカフェタイムを提供します。
+            </p>
+            <a href="#" class="btn">詳しく見る</a>
+        </div>
+    </div>
+
+    <div class="service-item">
+        <div class="service-img">IMAGE: Rental Service</div>
+        <div class="service-text">
+            <span class="service-num">02. Rental Service</span>
+            <h2 class="service-title">環境美化用品レンタル</h2>
+            <p class="service-desc">
+                清潔な空間づくりをトータルでサポート。<br>
+                マットやモップなど、機能性とデザイン性を兼ね備えた<br>
+                アイテムを定期配送いたします。
+            </p>
+            <a href="#" class="btn">詳しく見る</a>
+        </div>
+    </div>
+
+    <div class="service-item">
+        <div class="service-img">IMAGE: Pharmacy</div>
+        <div class="service-text">
+            <span class="service-num">03. Pharmacy</span>
+            <h2 class="service-title">調剤薬局事業</h2>
+            <p class="service-desc">
+                地域の皆様の健康を支えるパートナーとして。<br>
+                お薬のことはもちろん、健康に関するご相談も<br>
+                お気軽にお寄せください。
+            </p>
+            <a href="#" class="btn">詳しく見る</a>
+        </div>
+    </div>
+
+</section>
+
+<!-- 新しい6つのリンクエリア -->
+<section class="useful-section">
+    <div class="container useful-grid">
+        <a href="#" class="useful-item">
+            <span class="useful-title">事業所一覧</span>
+            <span class="useful-sub">Office List</span>
+        </a>
+        <a href="#" class="useful-item">
+            <span class="useful-title">商品一覧</span>
+            <span class="useful-sub">Product List</span>
+        </a>
+        <a href="#" class="useful-item">
+            <span class="useful-title">採用について</span>
+            <span class="useful-sub">Recruit</span>
+        </a>
+        <a href="#" class="useful-item">
+            <span class="useful-title">IR情報</span>
+            <span class="useful-sub">Investor Relations</span>
+        </a>
+        <a href="#" class="useful-item">
+            <span class="useful-title">電子公告</span>
+            <span class="useful-sub">Public Notice</span>
+        </a>
+        <a href="#" class="useful-item">
+            <span class="useful-title">お問い合わせ</span>
+            <span class="useful-sub">Contact</span>
+        </a>
+    </div>
+</section>
+
+<!-- キャンペーンエリア -->
+<section class="campaign-section">
+    <div class="campaign-container">
+        <a href="#" class="campaign-banner">
+            <div class="campaign-header">
+                <h3>SPECIAL CAMPAIGN</h3>
+                <span>特集キャンペーン</span>
+            </div>
+            <div class="campaign-image">
+                CAMPAIGN IMAGE
+            </div>
+            <div class="campaign-text">
+                <p>【期間限定】年末大掃除特集<br>オフィスの清掃ならお任せください。プロの技術で徹底的にきれいにします。</p>
+            </div>
+        </a>
+    </div>
+</section>
+
+<section class="promo-section">
+    <!-- Row 1 -->
+    <a href="#" class="promo-banner">
+        <div class="promo-content">
+            <h3>OFFICE COFFEE</h3>
+            <p>オフィスコーヒーサービス</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+    <a href="#" class="promo-banner">
+        <div class="promo-content">
+            <h3>RENTAL</h3>
+            <p>環境美化用品レンタル</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+    
+    <!-- Row 2 -->
+    <a href="#" class="promo-banner">
+        <div class="promo-content">
+            <h3>PHARMACY</h3>
+            <p>調剤薬局事業</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+    <a href="#" class="promo-banner">
+        <div class="promo-content">
+            <h3>FLOWER</h3>
+            <p>フラワーレンタル</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+
+    <!-- Row 3 -->
+    <a href="#" class="promo-banner">
+        <div class="promo-content">
+            <h3>CLEANING</h3>
+            <p>オフィス・店舗清掃</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+    <a href="#" class="promo-banner">
+        <div class="promo-content">
+            <h3>RESTAURANT</h3>
+            <p>レストラン・売店運営</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-col">
+            <h3>CONCEPT</h3>
+            <ul>
+                <li><a href="#">企業理念</a></li>
+                <li><a href="#">代表メッセージ</a></li>
+                <li><a href="#">私たちの強み</a></li>
+                <li><a href="#">SDGsへの取り組み</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>SERVICE</h3>
+            <ul>
+                <li><a href="#">オフィスコーヒーサービス</a></li>
+                <li><a href="#">環境美化用品レンタル</a></li>
+                <li><a href="#">調剤薬局事業</a></li>
+                <li><a href="#">フラワーレンタル</a></li>
+                <li><a href="#">ミネラルウォーター</a></li>
+                <li><a href="#">オフィス・店舗清掃</a></li>
+                <li><a href="#">ゴルフ場レストラン受託</a></li>
+                <li><a href="#">売店・コンビニ運営</a></li>
+                <li><a href="#">会議室・イベントホール運営</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>COMPANY</h3>
+            <ul>
+                <li><a href="#">会社概要</a></li>
+                <li><a href="#">役員一覧</a></li>
+                <li><a href="#">沿革</a></li>
+                <li><a href="#">組織図</a></li>
+                <li><a href="#">事業所一覧</a></li>
+                <li><a href="#">グループ企業</a></li>
+                <li><a href="#">電子公告</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>NEWS & OTHERS</h3>
+            <ul>
+                <li><a href="#">ニュース一覧</a></li>
+                <li><a href="#">採用情報</a></li>
+                <li><a href="#">お問い合わせ</a></li>
+                <li><a href="#">プライバシーポリシー</a></li>
+                <li><a href="#">サイトマップ</a></li>
+            </ul>
+        </div>
+    </div>
+    <p class="copyright">&copy; UNIMAT LIFE CORPORATION. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // メニューの開閉制御
+    const menuTrigger = document.getElementById('menuTrigger');
+    const globalMenu = document.getElementById('globalMenu');
+    const menuLinks = document.querySelectorAll('.menu-link');
+    const menuToggles = document.querySelectorAll('.menu-toggle');
+
+    // ハンバーガーメニューのクリック
+    menuTrigger.addEventListener('click', () => {
+        menuTrigger.classList.toggle('active');
+        globalMenu.classList.toggle('active');
+    });
+
+    // 通常リンクをクリックしたらメニューを閉じる
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            menuTrigger.classList.remove('active');
+            globalMenu.classList.remove('active');
+        });
+    });
+
+    // アコーディオンメニューの制御
+    menuToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            this.classList.toggle('open');
+            const subMenu = this.nextElementSibling;
+            
+            // PC表示（769px以上）の場合は、CSSでheight:auto !importantしているのでJS制御はクラス付与のみでOK
+            // ただし、スマホへの切り替えも考慮して一応styleも操作しておくが、
+            // PCではCSSの !important が勝つ
+            
+            if (subMenu.classList.contains('is-open')) {
+                subMenu.classList.remove('is-open');
+                subMenu.style.height = null;
+            } else {
+                subMenu.classList.add('is-open');
+                // スマホ用に高さを計算
+                subMenu.style.height = subMenu.scrollHeight + "px";
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
