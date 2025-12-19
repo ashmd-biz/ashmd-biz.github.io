@@ -1,0 +1,9 @@
+# .gcloudignore - Firebase Functionsのデプロイ時に除外するファイル
+# .gitignoreとは別に管理
+
+node_modules/
+firebase-debug.log
+*.log
+
+# develop/ はデプロイに含める必要があるため、.gcloudignoreでは除外しない
+
