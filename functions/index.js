@@ -17,8 +17,6 @@ const getAuthConfig = () => {
 /**
  * Basic認証を実装したミドルウェア
  * /develop/* パスへのアクセスを保護
- * 
- * 注意: デプロイ前に public/develop を functions/public/develop にコピーする必要があります
  */
 exports.authDevelop = functions.https.onRequest((req, res) => {
   const authConfig = getAuthConfig();
@@ -68,16 +66,6 @@ exports.authDevelop = functions.https.onRequest((req, res) => {
   }
   const staticFilePath = path.join(__dirname, 'develop', relativePath);
 
-  // デバッグ用：利用可能なディレクトリを確認
-  const debugInfo = {
-    __dirname: __dirname,
-    filePath: filePath,
-    relativePath: relativePath,
-    staticFilePath: staticFilePath,
-    exists: fs.existsSync(staticFilePath),
-    developDirExists: fs.existsSync(path.join(__dirname, 'develop'))
-  };
-
   // ファイルが存在するか確認
   if (fs.existsSync(staticFilePath)) {
     const ext = path.extname(filePath).toLowerCase();
@@ -112,8 +100,7 @@ exports.authDevelop = functions.https.onRequest((req, res) => {
       res.status(200).send(fileContent);
     }
   } else {
-    // デバッグ情報を含めて404を返す（本番環境では削除推奨）
-    res.status(404).send(`File not found. Debug: ${JSON.stringify(debugInfo, null, 2)}`);
+    res.status(404).send('File not found');
   }
 });
 
