@@ -413,6 +413,40 @@
         color: #666;
     }
 
+    /* 採用セクション */
+    .recruit-section {
+        padding-bottom: 160px;
+    }
+    .recruit-content {
+        display: flex;
+        align-items: center;
+        gap: 80px;
+    }
+    .recruit-text {
+        flex: 1;
+    }
+    .recruit-desc {
+        font-size: 18px;
+        color: #666;
+        line-height: 2.0;
+        margin-bottom: 40px;
+    }
+    .recruit-buttons {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .recruit-img {
+        flex: 1;
+        height: 400px;
+        background-color: #ddd;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #888;
+        font-weight: bold;
+    }
+
     /* ニュース */
     .news {
         background-color: #fafafa;
@@ -688,6 +722,11 @@
         .service-item { flex-direction: column !important; gap: 30px; margin-bottom: 80px; align-items: flex-start !important; }
         .service-text { width: 100%; }
         .service-img { width: 100%; height: 400px !important; flex: none; }
+        .recruit-content { flex-direction: column; gap: 30px; }
+        .recruit-text { width: 100%; }
+        .recruit-img { width: 100%; height: 300px !important; flex: none; }
+        .recruit-buttons { flex-direction: column; }
+        .recruit-buttons .btn { width: 100%; text-align: center; }
         header { padding: 0 20px; }
         
         .footer-container { flex-direction: column; gap: 40px; }
