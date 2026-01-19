@@ -54,3 +54,40 @@
             globalMenu.classList.remove('active');
         }
     });
+
+    // 検索機能
+    const searchTrigger = document.getElementById('searchTrigger');
+    const searchOverlay = document.getElementById('searchOverlay');
+    const searchClose = document.getElementById('searchClose');
+    const searchInput = document.getElementById('searchInput');
+
+    // 検索アイコンクリックで検索入力枠を表示
+    searchTrigger.addEventListener('click', () => {
+        searchOverlay.classList.add('active');
+        // フォーカスを検索入力に移動
+        setTimeout(() => {
+            searchInput.focus();
+        }, 100);
+    });
+
+    // 閉じるボタンで検索入力枠を非表示
+    searchClose.addEventListener('click', () => {
+        searchOverlay.classList.remove('active');
+        searchInput.value = '';
+    });
+
+    // ESCキーで検索入力枠を閉じる
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+            searchOverlay.classList.remove('active');
+            searchInput.value = '';
+        }
+    });
+
+    // 検索オーバーレイの背景クリックで閉じる
+    searchOverlay.addEventListener('click', (e) => {
+        if (e.target === searchOverlay) {
+            searchOverlay.classList.remove('active');
+            searchInput.value = '';
+        }
+    });

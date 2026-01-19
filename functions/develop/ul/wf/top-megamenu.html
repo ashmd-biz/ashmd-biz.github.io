@@ -85,12 +85,43 @@
         </div>
     </nav>
 
-    <div class="menu-trigger" id="menuTrigger">
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="header-actions">
+        <div class="menu-trigger" id="menuTrigger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="search-trigger" id="searchTrigger">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 19L14.65 14.65" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
     </div>
 </header>
+
+<!-- 検索入力枠 -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-container">
+        <form class="search-form" action="https://www.unimat-life.co.jp/site_search_result.php" method="get">
+            <input type="hidden" name="cx" value="012818247520671275224:scdvqp84dve">
+            <input type="hidden" name="ie" value="utf-8">
+            <input type="hidden" name="sa" value="検索">
+            <input type="text" name="q" class="search-input" id="searchInput" placeholder="検索キーワードを入力してください" autocomplete="off" required>
+            <button type="submit" class="search-submit">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 21L16.65 16.65" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button type="button" class="search-close" id="searchClose">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+</div>
 
 <section class="hero">
     <h1>暮らしの中にゆとりと、やすらぎを</h1>
