@@ -91,3 +91,76 @@
             searchInput.value = '';
         }
     });
+
+    // ヒーロースライダー
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const heroIndicators = document.querySelectorAll('.hero-indicator');
+    const heroPrev = document.querySelector('.hero-prev');
+    const heroNext = document.querySelector('.hero-next');
+    let currentSlide = 0;
+    let slideInterval;
+
+    // スライドを表示する関数
+    function showSlide(index) {
+        // すべてのスライドとインジケーターからactiveクラスを削除
+        heroSlides.forEach(slide => slide.classList.remove('active'));
+        heroIndicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // 現在のスライドとインジケーターにactiveクラスを追加
+        heroSlides[index].classList.add('active');
+        heroIndicators[index].classList.add('active');
+        currentSlide = index;
+    }
+
+    // 次のスライドに移動
+    function nextSlide() {
+        const next = (currentSlide + 1) % heroSlides.length;
+        showSlide(next);
+    }
+
+    // 前のスライドに移動
+    function prevSlide() {
+        const prev = (currentSlide - 1 + heroSlides.length) % heroSlides.length;
+        showSlide(prev);
+    }
+
+    // 自動スライドを開始
+    function startAutoSlide() {
+        slideInterval = setInterval(nextSlide, 5000); // 5秒ごとに自動切り替え
+    }
+
+    // 自動スライドを停止
+    function stopAutoSlide() {
+        clearInterval(slideInterval);
+    }
+
+    // イベントリスナー
+    if (heroNext) {
+        heroNext.addEventListener('click', () => {
+            nextSlide();
+            stopAutoSlide();
+            startAutoSlide();
+        });
+    }
+
+    if (heroPrev) {
+        heroPrev.addEventListener('click', () => {
+            prevSlide();
+            stopAutoSlide();
+            startAutoSlide();
+        });
+    }
+
+    // インジケータークリック
+    heroIndicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            showSlide(index);
+            stopAutoSlide();
+            startAutoSlide();
+        });
+    });
+
+    // 自動スライドを開始
+    if (heroSlides.length > 0) {
+        startAutoSlide();
+    }
