@@ -857,11 +857,46 @@
         opacity: 1;
         padding-left: 5px;
     }
+    .footer-social {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 1px solid #333;
+    }
+    .social-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 12px 24px;
+        color: #fff;
+        text-decoration: none;
+        border: 1px solid #444;
+        border-radius: 4px;
+        transition: all 0.3s;
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .social-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #666;
+        transform: translateY(-2px);
+    }
+    .social-link svg {
+        width: 28px;
+        height: 28px;
+        flex-shrink: 0;
+    }
+    .social-text {
+        font-size: 16px;
+        letter-spacing: 0.05em;
+        font-weight: 500;
+    }
     .copyright {
         text-align: center;
-        margin-top: 60px;
-        padding-top: 20px;
-        border-top: 1px solid #333;
+        margin-top: 20px;
         color: #666;
         font-size: 11px;
         letter-spacing: 0.05em;
@@ -905,6 +940,10 @@
         .footer-col { border-bottom: 1px solid #333; padding-bottom: 20px; }
         .footer-col:last-child { border-bottom: none; }
         .footer-col h3 { border-bottom: none; color: #fff; font-size: 16px; margin-bottom: 15px; }
+        .footer-social { padding-top: 20px; margin-top: 30px; }
+        .social-link { padding: 10px 20px; }
+        .social-link svg { width: 24px; height: 24px; }
+        .social-text { font-size: 14px; }
         
         .promo-section { display: block; }
         .promo-banner { 
