@@ -389,7 +389,7 @@
     }
     .service-header {
         text-align: center;
-        margin-bottom: 100px;
+        margin-bottom: 80px;
     }
     .service-header h2 {
         font-size: 36px;
@@ -403,44 +403,39 @@
         letter-spacing: 0.1em;
         display: block;
     }
+    .service-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
     .service-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 120px;
-        gap: 80px;
+        padding: 40px;
+        border: 1px solid #eee;
+        background: #fff;
+        transition: box-shadow 0.3s;
     }
-    .service-item:nth-child(even) {
-        flex-direction: row-reverse;
-    }
-    .service-img {
-        flex: 1;
-        height: 400px;
-        background-color: #ddd;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #888;
-        font-weight: bold;
-    }
-    .service-text {
-        flex: 1;
+    .service-item:hover {
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
     .service-num {
         display: block;
-        font-size: 14px;
+        font-size: 12px;
         color: #999;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         font-family: serif;
+        letter-spacing: 0.05em;
     }
     .service-title {
-        font-size: 32px;
-        margin-bottom: 30px;
+        font-size: 22px;
+        margin: 0 0 20px;
         font-weight: normal;
         letter-spacing: 0.05em;
     }
     .service-desc {
-        margin-bottom: 40px;
+        margin-bottom: 30px;
         color: #666;
+        font-size: 14px;
+        line-height: 1.8;
     }
 
     /* 採用セクション */
@@ -831,9 +826,9 @@
     @media (max-width: 768px) {
         .hero h1 { font-size: 28px; }
         .concept p { font-size: 18px; text-align: left; padding: 0 20px; }
-        .service-item { flex-direction: column !important; gap: 30px; margin-bottom: 80px; align-items: flex-start !important; }
-        .service-text { width: 100%; }
-        .service-img { width: 100%; height: 400px !important; flex: none; }
+        .service-grid { grid-template-columns: 1fr; gap: 20px; }
+        .service-item { padding: 30px; }
+        .service-title { font-size: 18px; }
         .recruit-content { flex-direction: column; gap: 30px; }
         .recruit-text { width: 100%; }
         .recruit-img { width: 100%; height: 300px !important; flex: none; }
