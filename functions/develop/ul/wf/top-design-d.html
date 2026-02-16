@@ -53,6 +53,112 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
 }
+
+/* =============================================
+   FIXED BACKGROUND SHAPES
+   ============================================= */
+.bg-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.bg-shapes .shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0;
+    animation: shape-fade-in 2s ease-out forwards;
+}
+.bg-shapes .shape-1 {
+    width: 500px;
+    height: 500px;
+    top: 5%;
+    left: -5%;
+    background: radial-gradient(circle, var(--color-primary-pale) 0%, transparent 70%);
+    opacity: 0;
+    animation-delay: 0.3s;
+}
+.bg-shapes .shape-2 {
+    width: 400px;
+    height: 350px;
+    top: 20%;
+    right: -3%;
+    background: radial-gradient(circle, var(--color-accent-light) 0%, transparent 70%);
+    border-radius: 60% 40% 50% 50%;
+    opacity: 0;
+    animation-delay: 0.6s;
+}
+.bg-shapes .shape-3 {
+    width: 350px;
+    height: 350px;
+    top: 50%;
+    left: 8%;
+    background: radial-gradient(circle, var(--color-warm-dark) 0%, transparent 70%);
+    border-radius: 40% 60% 55% 45%;
+    opacity: 0;
+    animation-delay: 0.9s;
+}
+.bg-shapes .shape-4 {
+    width: 450px;
+    height: 400px;
+    top: 70%;
+    right: 5%;
+    background: radial-gradient(circle, var(--color-primary-pale) 0%, transparent 70%);
+    border-radius: 50% 50% 40% 60%;
+    opacity: 0;
+    animation-delay: 1.2s;
+}
+.bg-shapes .shape-5 {
+    width: 300px;
+    height: 300px;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, var(--color-accent-light) 0%, transparent 70%);
+    border-radius: 45% 55% 50% 50%;
+    opacity: 0;
+    animation-delay: 1.5s;
+}
+@keyframes shape-fade-in {
+    to { opacity: 0.55; }
+}
+.bg-shapes .shape-1 { animation: shape-fade-in 2s 0.3s ease-out forwards, shape-float-1 20s 2.3s ease-in-out infinite; }
+.bg-shapes .shape-2 { animation: shape-fade-in 2s 0.6s ease-out forwards, shape-float-2 25s 2.6s ease-in-out infinite; }
+.bg-shapes .shape-3 { animation: shape-fade-in 2s 0.9s ease-out forwards, shape-float-3 22s 2.9s ease-in-out infinite; }
+.bg-shapes .shape-4 { animation: shape-fade-in 2s 1.2s ease-out forwards, shape-float-4 28s 3.2s ease-in-out infinite; }
+.bg-shapes .shape-5 { animation: shape-fade-in 2s 1.5s ease-out forwards, shape-float-5 24s 3.5s ease-in-out infinite; }
+@keyframes shape-float-1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(30px, 20px); }
+}
+@keyframes shape-float-2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-20px, 30px); }
+}
+@keyframes shape-float-3 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(25px, -15px); }
+}
+@keyframes shape-float-4 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-15px, -25px); }
+}
+@keyframes shape-float-5 {
+    0%, 100% { transform: translateX(-50%); }
+    50% { transform: translateX(-50%) translate(20px, 15px); }
+}
+/* Ensure all content sits above bg-shapes */
+.hero, section, footer, .wave-divider,
+.recruit-wave-divider-top, .recruit-wave-divider-bottom {
+    position: relative;
+    z-index: 1;
+}
+
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; padding: 0; margin: 0; }
@@ -1191,6 +1297,7 @@ header.scrolled {
 .recruit-wave-divider-top {
     line-height: 0;
     background: #5a7a3a;
+    margin-top: -1px;
 }
 .recruit-wave-divider-top svg {
     width: 100%;
@@ -1200,6 +1307,7 @@ header.scrolled {
 .recruit-wave-divider-bottom {
     line-height: 0;
     background: #5a7a3a;
+    margin-bottom: -1px;
 }
 .recruit-wave-divider-bottom svg {
     width: 100%;
@@ -1828,6 +1936,14 @@ footer {
 </style>
 </head>
 <body>
+
+<div class="bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="shape shape-5"></div>
+</div>
 
 <header>
     <div class="logo">
