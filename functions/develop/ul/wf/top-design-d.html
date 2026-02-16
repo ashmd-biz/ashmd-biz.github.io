@@ -52,6 +52,42 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* =============================================
+   SECTION DECORATIONS (parallax scroll)
+   ============================================= */
+.section-deco {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+    transition: transform 0.1s linear;
+}
+.section-deco--circle {
+    border-radius: 50%;
+    border: 2px solid var(--color-accent-light);
+    opacity: 0.25;
+}
+.section-deco--circle-lg {
+    border-radius: 50%;
+    border: 3px solid var(--color-accent-light);
+    opacity: 0.2;
+}
+.section-deco--fill {
+    border-radius: 50%;
+    background: var(--color-primary-pale);
+    opacity: 0.3;
+}
+.section-deco--dots {
+    background-image: radial-gradient(var(--color-primary) 1.5px, transparent 1.5px);
+    background-size: 18px 18px;
+    opacity: 0.06;
+}
+.section-deco--dots-warm {
+    background-image: radial-gradient(var(--color-accent) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+    opacity: 0.08;
+}
+
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; padding: 0; margin: 0; }
@@ -1908,6 +1944,8 @@ footer {
      CONCEPT
      ============================================= -->
 <section class="concept container fade-in">
+    <div class="section-deco section-deco--circle" data-parallax="-0.15" style="width:180px;height:180px;top:50%;right:20px;"></div>
+    <div class="section-deco section-deco--fill" data-parallax="0.1" style="width:100px;height:100px;top:20px;left:10px;opacity:0.15;"></div>
     <p>ユニマットライフは、オフィスからご家庭まで<br>
     <span class="highlight">「ゆとり」と「やすらぎ」</span>をお届けする企業です。<br>
     お客様一人ひとりの空間に寄り添い、<br>
@@ -1924,6 +1962,8 @@ footer {
      NEWS
      ============================================= -->
 <section class="news">
+    <div class="section-deco section-deco--circle" data-parallax="-0.08" style="width:120px;height:120px;top:60px;right:-20px;opacity:0.15;"></div>
+    <div class="section-deco section-deco--fill" data-parallax="0.12" style="width:90px;height:90px;bottom:40px;left:-20px;opacity:0.12;"></div>
     <div class="container">
         <div class="section-header fade-in">
             <h2>NEWS &amp; TOPICS</h2>
@@ -1957,6 +1997,10 @@ footer {
      SERVICE
      ============================================= -->
 <section class="service-section">
+    <div class="section-deco section-deco--dots" data-parallax="0.12" style="width:200px;height:200px;top:100px;left:-40px;"></div>
+    <div class="section-deco section-deco--circle" data-parallax="-0.1" style="width:160px;height:160px;bottom:80px;right:-30px;"></div>
+    <div class="section-deco section-deco--fill" data-parallax="0.08" style="width:80px;height:80px;top:30px;right:8%;opacity:0.12;"></div>
+    <div class="section-deco section-deco--circle" data-parallax="-0.18" style="width:100px;height:100px;bottom:200px;left:5%;opacity:0.15;border-color:var(--color-primary-light);"></div>
     <div class="container">
         <div class="section-header fade-in">
             <h2>SERVICE</h2>
@@ -2036,6 +2080,9 @@ footer {
      EC SHOP
      ============================================= -->
 <section class="ecshop-section">
+    <div class="section-deco section-deco--dots-warm" data-parallax="0.1" style="width:140px;height:140px;top:-60px;right:10%;transform:rotate(15deg);"></div>
+    <div class="section-deco section-deco--circle" data-parallax="-0.12" style="width:130px;height:130px;bottom:30px;left:-25px;opacity:0.18;"></div>
+    <div class="section-deco section-deco--fill" data-parallax="0.06" style="width:70px;height:70px;top:40%;right:-15px;opacity:0.15;"></div>
     <div class="container">
         <div class="section-header fade-in">
             <h2>EC SHOP</h2>
@@ -2078,6 +2125,9 @@ footer {
     <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,0 L0,0 Z" fill="#f5efe6"/></svg>
 </div>
 <section class="recruit-section">
+    <div class="section-deco section-deco--circle" data-parallax="-0.1" style="width:150px;height:150px;top:60px;right:5%;border-color:rgba(255,255,255,0.2);"></div>
+    <div class="section-deco section-deco--circle" data-parallax="0.08" style="width:100px;height:100px;bottom:80px;left:3%;border-color:rgba(255,255,255,0.15);"></div>
+    <div class="section-deco section-deco--fill" data-parallax="-0.12" style="width:120px;height:120px;bottom:-30px;right:15%;background:rgba(255,255,255,0.06);"></div>
     <div class="container">
         <div class="section-header fade-in">
             <h2>RECRUIT</h2>
@@ -2111,6 +2161,10 @@ footer {
      USEFUL LINKS
      ============================================= -->
 <section class="useful-section">
+    <div class="section-deco section-deco--dots-warm" data-parallax="0.08" style="width:280px;height:280px;top:-40px;right:-40px;"></div>
+    <div class="section-deco section-deco--circle" data-parallax="-0.12" style="width:180px;height:180px;bottom:-30px;left:-30px;border-color:var(--color-primary-light);"></div>
+    <div class="section-deco section-deco--fill" data-parallax="0.14" style="width:90px;height:90px;top:50%;left:3%;opacity:0.12;"></div>
+    <div class="section-deco section-deco--circle" data-parallax="-0.06" style="width:110px;height:110px;top:20%;right:5%;opacity:0.12;"></div>
     <div class="container">
         <div class="useful-grid">
             <a href="#" class="useful-item fade-in">
@@ -2169,6 +2223,10 @@ footer {
      CAMPAIGN
      ============================================= -->
 <section class="campaign-section">
+    <div class="section-deco section-deco--circle-lg" data-parallax="-0.15" style="width:300px;height:300px;top:-100px;right:-100px;"></div>
+    <div class="section-deco section-deco--fill" data-parallax="0.1" style="width:200px;height:200px;bottom:-50px;left:-80px;"></div>
+    <div class="section-deco section-deco--circle" data-parallax="0.08" style="width:100px;height:100px;top:40%;left:-20px;opacity:0.18;"></div>
+    <div class="section-deco section-deco--dots" data-parallax="-0.06" style="width:120px;height:120px;bottom:20px;right:5%;opacity:0.04;"></div>
     <div class="campaign-container">
         <div class="section-header fade-in">
             <h2>SPECIAL CAMPAIGN</h2>
@@ -2444,6 +2502,26 @@ window.addEventListener('scroll', () => {
 pageTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+/* =============================================
+   PARALLAX DECORATIONS
+   ============================================= */
+const parallaxEls = document.querySelectorAll('[data-parallax]');
+parallaxEls.forEach(el => { el._baseTransform = el.style.transform || ''; });
+let ticking = false;
+function updateParallax() {
+    parallaxEls.forEach(el => {
+        const speed = parseFloat(el.dataset.parallax);
+        const rect = el.parentElement.getBoundingClientRect();
+        const offset = Math.round((rect.top + rect.height / 2) * speed);
+        el.style.transform = el._baseTransform + ' translateY(' + offset + 'px)';
+    });
+    ticking = false;
+}
+window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
+}, { passive: true });
+updateParallax();
 </script>
 </body>
 </html>
