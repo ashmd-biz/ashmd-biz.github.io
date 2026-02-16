@@ -1,0 +1,2563 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNIMAT LIFE - 暮らしの中にゆとりと、やすらぎを</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   DESIGN TOKENS
+   ============================================= */
+:root {
+    --color-primary: #5a7a3a;
+    --color-primary-light: #7a9f54;
+    --color-primary-pale: #e8f0de;
+    --color-accent: #c8956c;
+    --color-accent-light: #e8c9a8;
+    --color-warm: #f5efe6;
+    --color-warm-dark: #ebe0d0;
+    --color-text: #3a3a3a;
+    --color-text-light: #777;
+    --color-text-muted: #aaa;
+    --color-bg: #fdfcfa;
+    --color-white: #fff;
+    --color-border: #e8e4de;
+    --color-dark: #2a2a28;
+
+    --font-serif: 'Cormorant Garamond', 'Noto Serif JP', 'YuMincho', 'Yu Mincho', serif;
+    --font-sans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+
+    --shadow-soft: 0 4px 20px rgba(0,0,0,0.06);
+    --shadow-medium: 0 8px 30px rgba(0,0,0,0.1);
+    --shadow-hover: 0 12px 40px rgba(0,0,0,0.14);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 20px;
+    --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* =============================================
+   RESET & BASE
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+    margin: 0; padding: 0;
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    line-height: 1.9;
+    background-color: var(--color-bg);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; padding: 0; margin: 0; }
+h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: normal; }
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* =============================================
+   SCROLL ANIMATION
+   ============================================= */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+.fade-in-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+header {
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    background: rgba(253, 252, 250, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1000;
+    transition: box-shadow 0.3s;
+}
+header.scrolled {
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+}
+
+.logo {
+    position: relative;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.logo a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.logo img {
+    height: 44px;
+    width: auto;
+}
+
+/* Header Actions */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1001;
+}
+.search-trigger {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+.search-trigger:hover {
+    background: var(--color-primary-pale);
+}
+.search-trigger svg { width: 18px; height: 18px; }
+
+.menu-trigger {
+    cursor: pointer;
+    width: 30px;
+    height: 22px;
+    position: relative;
+    z-index: 1001;
+    display: none;
+}
+.menu-trigger span {
+    position: absolute;
+    right: 0;
+    height: 2px;
+    background-color: var(--color-text);
+    border-radius: 2px;
+    transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.menu-trigger span:nth-of-type(1) { top: 0; width: 100%; }
+.menu-trigger span:nth-of-type(2) { top: 10px; width: 60%; }
+.menu-trigger span:nth-of-type(3) { bottom: 0; width: 80%; }
+.menu-trigger:hover span { width: 100%; }
+.menu-trigger.active span:nth-of-type(1) { transform: translateY(10px) rotate(45deg); width: 100%; }
+.menu-trigger.active span:nth-of-type(2) { opacity: 0; width: 0; }
+.menu-trigger.active span:nth-of-type(3) { transform: translateY(-10px) rotate(-45deg); width: 100%; }
+
+/* Global Nav (PC) */
+.global-menu ul { list-style: none; padding: 0; margin: 0; }
+.menu-link, .menu-toggle {
+    text-decoration: none;
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+}
+.sub-text {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+    display: block;
+}
+
+@media (min-width: 769px) {
+    .menu-trigger { display: none; }
+    .global-menu {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        flex: 1;
+        justify-content: flex-end;
+    }
+    .menu-container { height: 100%; }
+    .global-menu > .menu-container > ul {
+        display: flex;
+        height: 100%;
+        justify-content: flex-end;
+    }
+    .menu-item {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    .menu-link, .menu-toggle {
+        padding: 0 18px;
+        height: 100%;
+        font-size: 13px;
+        letter-spacing: 0.1em;
+        font-weight: 500;
+        transition: var(--transition);
+        position: relative;
+    }
+    .menu-link::after, .menu-toggle::after {
+        content: '';
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--color-primary);
+        transition: all 0.3s;
+        transform: translateX(-50%);
+    }
+    .menu-link:hover::after, .menu-toggle:hover::after {
+        width: 30px;
+    }
+    .sub-menu {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: none;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-6px);
+        transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        pointer-events: none;
+        z-index: 990;
+    }
+    .menu-item:hover .sub-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+    .sub-menu-inner {
+        display: flex;
+        gap: 0;
+        padding: 0;
+        max-width: 1100px;
+        margin: 0 auto;
+        border-radius: 0 0 var(--radius) var(--radius);
+        overflow: hidden;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    }
+    .sub-menu-heading {
+        width: 250px;
+        flex-shrink: 0;
+        background: linear-gradient(150deg, var(--color-primary) 0%, #496a2c 100%);
+        padding: 36px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: var(--color-white);
+        border-radius: 0 0 0 var(--radius);
+    }
+    .sub-menu-heading .heading-en {
+        font-family: var(--font-serif);
+        font-size: 24px;
+        font-weight: 400;
+        letter-spacing: 0.12em;
+        margin-bottom: 4px;
+    }
+    .sub-menu-heading .heading-jp {
+        font-size: 11px;
+        opacity: 0.8;
+        letter-spacing: 0.15em;
+        margin-bottom: 16px;
+    }
+    .sub-menu-heading .heading-line {
+        width: 28px;
+        height: 1px;
+        background: rgba(255,255,255,0.45);
+        margin-bottom: 14px;
+    }
+    .sub-menu-heading .heading-desc {
+        font-size: 11.5px;
+        line-height: 1.9;
+        opacity: 0.7;
+    }
+    .sub-menu-links {
+        flex: 1;
+        padding: 24px 32px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2px 20px;
+        align-content: start;
+        background: rgba(255,255,255,0.88);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+    }
+    .sub-menu a {
+        font-size: 13.5px;
+        color: var(--color-text);
+        display: flex;
+        align-items: center;
+        padding: 11px 14px;
+        transition: all 0.25s ease;
+        position: relative;
+        border-radius: var(--radius-sm);
+        gap: 10px;
+    }
+    .sub-menu a::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--color-primary-light);
+        flex-shrink: 0;
+        transition: all 0.25s ease;
+    }
+    .sub-menu a::after {
+        content: '→';
+        font-size: 11px;
+        color: var(--color-primary);
+        margin-left: auto;
+        opacity: 0;
+        transform: translateX(-4px);
+        transition: all 0.25s ease;
+    }
+    .sub-menu a:hover {
+        background: var(--color-primary-pale);
+        color: var(--color-primary);
+    }
+    .sub-menu a:hover::before {
+        background: var(--color-primary);
+        transform: scale(1.4);
+    }
+    .sub-menu a:hover::after {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Mobile menu footer - hidden on PC */
+.mobile-menu-footer { display: none; }
+
+@media (max-width: 768px) {
+    .menu-trigger { display: block; }
+    .global-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(170deg, rgba(253,252,250,0.88) 0%, rgba(245,240,232,0.88) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+        overflow-y: auto;
+    }
+    .global-menu::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100vh;
+        background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-accent) 100%);
+        opacity: 0;
+        transition: opacity 0.6s ease 0.2s;
+        z-index: 1000;
+    }
+    .global-menu.active { opacity: 1; visibility: visible; }
+    .global-menu.active::before { opacity: 1; }
+    .menu-container {
+        margin: 100px auto 40px;
+        padding: 0 36px 60px;
+        text-align: left;
+        max-width: 480px;
+    }
+    .menu-item {
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        opacity: 0;
+        transform: translateX(30px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        display: block;
+    }
+    .global-menu.active .menu-item { opacity: 1; transform: translateX(0); }
+    .global-menu.active .menu-item:nth-child(1) { transition-delay: 0.1s; }
+    .global-menu.active .menu-item:nth-child(2) { transition-delay: 0.16s; }
+    .global-menu.active .menu-item:nth-child(3) { transition-delay: 0.22s; }
+    .global-menu.active .menu-item:nth-child(4) { transition-delay: 0.28s; }
+    .global-menu.active .menu-item:nth-child(5) { transition-delay: 0.34s; }
+    .global-menu.active .menu-item:nth-child(6) { transition-delay: 0.4s; }
+    .menu-link, .menu-toggle {
+        font-family: var(--font-serif);
+        font-size: 24px;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        padding: 22px 0;
+        position: relative;
+        text-align: left;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 12px;
+    }
+    .menu-link .sub-text, .menu-toggle .sub-text {
+        font-family: var(--font-sans);
+        font-size: 10px;
+        color: var(--color-text-muted);
+        letter-spacing: 0.05em;
+        margin-top: 0;
+    }
+    .menu-toggle::after {
+        content: '+';
+        font-family: var(--font-serif);
+        font-size: 24px;
+        font-weight: 300;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        width: auto; height: auto;
+        background: none;
+        left: auto;
+        bottom: auto;
+        color: var(--color-primary);
+    }
+    .menu-toggle.open::after { transform: translateY(-50%) rotate(45deg); }
+    .sub-menu {
+        height: 0;
+        overflow: hidden;
+        transition: height 0.4s ease;
+        background-color: rgba(90, 122, 58, 0.04);
+        text-align: left;
+        border-radius: var(--radius-sm);
+        margin-bottom: 4px;
+    }
+    .sub-menu.is-open { height: auto; }
+    .sub-menu-inner { padding: 0; display: block; }
+    .sub-menu-heading { display: none; }
+    .sub-menu-links { display: block; padding: 8px 0; }
+    .sub-menu li { border-bottom: none; }
+    .sub-menu a {
+        display: flex;
+        align-items: center;
+        padding: 11px 20px;
+        font-size: 14px;
+        color: var(--color-text-light);
+        border-radius: 0;
+        gap: 10px;
+        transition: color 0.25s ease, padding-left 0.25s ease;
+    }
+    .sub-menu a::before {
+        display: block;
+        content: '';
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--color-primary-light);
+        flex-shrink: 0;
+        transition: all 0.25s ease;
+    }
+    .sub-menu a::after { display: none; }
+    .sub-menu a:hover {
+        color: var(--color-primary);
+        padding-left: 24px;
+    }
+    .sub-menu a:hover::before {
+        background: var(--color-primary);
+    }
+
+    /* Mobile menu footer */
+    .mobile-menu-footer {
+        display: block;
+        margin-top: 36px;
+        padding-top: 28px;
+        border-top: 1px solid var(--color-border);
+        text-align: center;
+        opacity: 0;
+        transform: translateY(12px);
+        transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
+    }
+    .global-menu.active .mobile-menu-footer {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .mobile-menu-tagline {
+        font-family: var(--font-serif);
+        font-size: 14px;
+        color: var(--color-text-light);
+        letter-spacing: 0.12em;
+        line-height: 1.8;
+    }
+    .mobile-menu-copyright {
+        font-size: 10px;
+        color: var(--color-text-muted);
+        letter-spacing: 0.05em;
+        margin-top: 10px;
+    }
+}
+
+/* =============================================
+   SEARCH OVERLAY
+   ============================================= */
+.search-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    background: rgba(253, 252, 250, 0.98);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 140px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+.search-overlay.active { opacity: 1; visibility: visible; }
+.search-container { width: 100%; max-width: 700px; padding: 0 40px; }
+.search-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 12px;
+}
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 22px;
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: transparent;
+    padding: 0 20px 0 0;
+}
+.search-input::placeholder { color: #bbb; }
+.search-submit, .search-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+}
+.search-submit:hover, .search-close:hover { opacity: 0.6; }
+.search-submit { margin-right: 10px; }
+
+/* =============================================
+   HERO SECTION
+   ============================================= */
+.hero {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+.hero-slider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.hero-slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    background-size: cover;
+    background-position: center;
+}
+.hero-slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 50%, rgba(90,122,58,0.15) 100%);
+    z-index: 1;
+}
+.hero-slide:nth-child(1) {
+    background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&h=900&fit=crop');
+}
+.hero-slide:nth-child(2) {
+    background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600&h=900&fit=crop');
+}
+.hero-slide:nth-child(3) {
+    background-image: url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1600&h=900&fit=crop');
+}
+.hero-slide:nth-child(4) {
+    background-image: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&h=900&fit=crop');
+}
+.hero-slide:nth-child(5) {
+    background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1600&h=900&fit=crop');
+}
+.hero-slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 40px;
+}
+.hero h1 {
+    font-family: var(--font-serif);
+    font-size: 48px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--color-white);
+    text-shadow: 0 2px 30px rgba(0,0,0,0.15);
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+.hero p {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.25em;
+    font-style: italic;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.1);
+}
+.hero-controls {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    z-index: 100;
+    pointer-events: none;
+}
+.hero-prev, .hero-next {
+    width: 52px;
+    height: 52px;
+    background: rgba(255,255,255,0.85);
+    border: none;
+    border-radius: 50%;
+    font-size: 22px;
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    pointer-events: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.hero-prev:hover, .hero-next:hover {
+    background: var(--color-white);
+    transform: scale(1.08);
+    box-shadow: var(--shadow-medium);
+}
+.hero-indicators {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+.hero-indicator {
+    width: 32px;
+    height: 4px;
+    border-radius: 2px;
+    border: none;
+    background: rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: all 0.4s;
+    padding: 0;
+}
+.hero-indicator.active {
+    background: var(--color-white);
+    width: 48px;
+}
+.hero-indicator:hover { background: rgba(255,255,255,0.7); }
+.scroll-down {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    animation: bounce 2.5s infinite;
+    z-index: 10;
+    color: rgba(255,255,255,0.8);
+    font-family: var(--font-serif);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+.scroll-down::after {
+    content: '';
+    width: 1px;
+    height: 30px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, transparent 100%);
+    animation: scroll-line 2s infinite;
+}
+@keyframes scroll-line {
+    0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+    50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    100% { transform: scaleY(1); transform-origin: top; opacity: 0; }
+}
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* Wave Divider (concept→news) */
+.wave-divider {
+    line-height: 0;
+    margin: -1px 0;
+}
+.wave-divider svg {
+    width: 100%;
+    height: 60px;
+    display: block;
+}
+
+/* =============================================
+   SECTION HEADER (共通)
+   ============================================= */
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+.section-header h2 {
+    font-family: var(--font-serif);
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--color-text);
+    margin-bottom: 8px;
+}
+.section-header .section-sub {
+    font-size: 13px;
+    color: var(--color-primary);
+    letter-spacing: 0.15em;
+    display: block;
+}
+.section-header .section-line {
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: var(--color-primary);
+    margin: 20px auto 0;
+}
+
+/* =============================================
+   CONCEPT
+   ============================================= */
+.concept {
+    padding: 140px 0 120px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.concept::before {
+    content: '"';
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-serif);
+    font-size: 200px;
+    color: var(--color-primary);
+    opacity: 0.06;
+    line-height: 1;
+    pointer-events: none;
+}
+.concept::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 180px;
+    height: 180px;
+    border: 2px solid var(--color-accent-light);
+    border-radius: 50%;
+    opacity: 0.3;
+    pointer-events: none;
+}
+.concept p {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 2.4;
+    color: var(--color-text);
+    letter-spacing: 0.08em;
+    position: relative;
+}
+.concept .highlight {
+    background: linear-gradient(transparent 60%, var(--color-accent-light) 60%);
+    padding: 0 4px;
+}
+.concept .concept-deco {
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--color-accent);
+    margin: 30px auto 0;
+}
+
+/* =============================================
+   NEWS
+   ============================================= */
+.news {
+    background: linear-gradient(180deg, var(--color-warm) 0%, var(--color-bg) 100%);
+    padding: 100px 0;
+    margin-bottom: 0;
+    position: relative;
+}
+.news::before {
+    content: 'NEWS';
+    position: absolute;
+    top: 30px;
+    left: -20px;
+    font-family: var(--font-serif);
+    font-size: 120px;
+    font-weight: 600;
+    color: var(--color-primary);
+    opacity: 0.03;
+    letter-spacing: 0.1em;
+    pointer-events: none;
+}
+.news-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.news-list li {
+    border-bottom: 1px solid var(--color-border);
+    padding: 22px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.news-list li:hover {
+    padding-left: 8px;
+}
+.news-list li:hover .news-title {
+    color: var(--color-primary);
+}
+.news-date {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    min-width: 100px;
+}
+.news-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    font-weight: 500;
+}
+.news-tag--product {
+    background: linear-gradient(135deg, #e8f0de, #d4e6c4);
+    color: #4a6a2e;
+}
+.news-tag--recruit {
+    background: linear-gradient(135deg, #fce4d6, #f5d0b8);
+    color: #b06830;
+}
+.news-tag--info {
+    background: linear-gradient(135deg, #dde8f0, #c4d6e8);
+    color: #3a5a7a;
+}
+.news-title {
+    font-size: 15px;
+    transition: color 0.3s;
+}
+.news-more {
+    text-align: center;
+    margin-top: 50px;
+}
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 42px;
+    border: 1px solid var(--color-border);
+    border-radius: 50px;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--color-text);
+    transition: var(--transition);
+    background: var(--color-white);
+}
+.btn-outline:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    box-shadow: 0 4px 16px rgba(90,122,58,0.12);
+}
+.btn-outline .arrow {
+    transition: transform 0.3s;
+    font-size: 16px;
+}
+.btn-outline:hover .arrow { transform: translateX(4px); }
+
+/* =============================================
+   SERVICE
+   ============================================= */
+.service-section {
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+}
+.service-section::before {
+    content: '';
+    position: absolute;
+    top: 100px;
+    left: -40px;
+    width: 200px;
+    height: 200px;
+    background-image: radial-gradient(var(--color-primary) 1.5px, transparent 1.5px);
+    background-size: 18px 18px;
+    opacity: 0.06;
+    pointer-events: none;
+}
+.service-section::after {
+    content: '';
+    position: absolute;
+    bottom: 80px;
+    right: -30px;
+    width: 160px;
+    height: 160px;
+    border: 2px solid var(--color-accent-light);
+    border-radius: 50%;
+    opacity: 0.2;
+    pointer-events: none;
+}
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+.service-item {
+    padding: 40px 36px;
+    border-radius: var(--radius);
+    background: #2a2a28;
+    border: none;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-size: cover;
+    background-position: center;
+}
+.service-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(30,30,28,0.45) 0%, rgba(30,30,28,0.82) 100%);
+    transition: var(--transition);
+    z-index: 0;
+}
+.service-item:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
+}
+.service-item:hover::before {
+    background: linear-gradient(180deg, rgba(30,30,28,0.3) 0%, rgba(30,30,28,0.75) 100%);
+}
+.service-item::after {
+    content: attr(data-num);
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    font-family: var(--font-serif);
+    font-size: 100px;
+    font-weight: 600;
+    color: #fff;
+    opacity: 0.08;
+    line-height: 1;
+    pointer-events: none;
+    transition: opacity 0.4s;
+    z-index: 1;
+}
+.service-item:hover::after {
+    opacity: 0.15;
+}
+/* 各カードの背景画像 */
+.service-item[data-num="01"] { background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&h=400&fit=crop'); }
+.service-item[data-num="02"] { background-image: url('https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&h=400&fit=crop'); }
+.service-item[data-num="03"] { background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop'); }
+.service-item[data-num="04"] { background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop'); }
+.service-item[data-num="05"] { background-image: url('https://images.unsplash.com/photo-1585435557343-3b092031a831?w=600&h=400&fit=crop'); }
+.service-item[data-num="06"] { background-image: url('https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&h=400&fit=crop'); }
+.service-item[data-num="07"] { background-image: url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&h=400&fit=crop'); }
+.service-item[data-num="08"] { background-image: url('https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&h=400&fit=crop'); }
+
+.service-body {
+    position: relative;
+    z-index: 1;
+}
+.service-num {
+    display: inline-block;
+    font-family: var(--font-serif);
+    font-size: 12px;
+    color: var(--color-accent-light);
+    margin-bottom: 10px;
+    letter-spacing: 0.08em;
+    font-style: italic;
+}
+.service-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    letter-spacing: 0.05em;
+    color: #fff;
+}
+.service-desc {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    line-height: 1.9;
+    margin-bottom: 20px;
+}
+.btn-service {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--color-accent-light);
+    letter-spacing: 0.08em;
+    transition: var(--transition);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+}
+.btn-service:hover {
+    border-bottom-color: var(--color-accent-light);
+    color: #fff;
+    gap: 12px;
+}
+.btn-service .arrow {
+    transition: transform 0.3s;
+}
+.btn-service:hover .arrow { transform: translateX(3px); }
+
+/* =============================================
+   EC SHOP
+   ============================================= */
+.ecshop-section {
+    padding: 120px 0;
+    background: var(--color-warm);
+    position: relative;
+    overflow: hidden;
+}
+.ecshop-section::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: 10%;
+    width: 140px;
+    height: 140px;
+    background-image: radial-gradient(var(--color-accent) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+    opacity: 0.08;
+    pointer-events: none;
+    transform: rotate(15deg);
+}
+.ecshop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+.ecshop-item {
+    padding: 0;
+    border-radius: var(--radius);
+    background: var(--color-white);
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+}
+.ecshop-item:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-6px);
+    border-color: transparent;
+}
+.ecshop-img {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.ecshop-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.15) 0%, transparent 50%);
+}
+.ecshop-item:nth-child(1) .ecshop-img {
+    background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&h=400&fit=crop');
+}
+.ecshop-item:nth-child(2) .ecshop-img {
+    background-image: url('https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&h=400&fit=crop');
+}
+.ecshop-item:nth-child(3) .ecshop-img {
+    background-image: url('https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=600&h=400&fit=crop');
+}
+.ecshop-body {
+    padding: 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.ecshop-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.ecshop-desc {
+    color: var(--color-text-light);
+    font-size: 13px;
+    line-height: 1.8;
+    flex: 1;
+    margin-bottom: 16px;
+}
+.ecshop-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    transition: var(--transition);
+}
+.ecshop-item:hover .ecshop-link {
+    gap: 10px;
+    color: var(--color-primary);
+}
+
+/* =============================================
+   RECRUIT
+   ============================================= */
+.recruit-section {
+    padding: 120px 0;
+    overflow: visible;
+    background: #5a7a3a;
+    color: var(--color-white);
+    position: relative;
+}
+.recruit-wave-divider-top {
+    line-height: 0;
+    background: #5a7a3a;
+}
+.recruit-wave-divider-top svg {
+    width: 100%;
+    height: 60px;
+    display: block;
+}
+.recruit-wave-divider-bottom {
+    line-height: 0;
+    background: #5a7a3a;
+}
+.recruit-wave-divider-bottom svg {
+    width: 100%;
+    height: 60px;
+    display: block;
+}
+.recruit-section .section-header h2 { color: var(--color-white); }
+.recruit-section .section-header .section-sub { color: rgba(255,255,255,0.6); }
+.recruit-section .section-header .section-line { background: var(--color-accent); }
+.recruit-inner-deco {
+    display: none;
+    pointer-events: none;
+}
+.recruit-content {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    position: relative;
+}
+.recruit-text { flex: 1; }
+.recruit-desc {
+    font-size: 16px;
+    color: rgba(255,255,255,0.85);
+    line-height: 2.2;
+    margin-bottom: 40px;
+}
+.recruit-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 36px;
+    background: var(--color-white);
+    color: var(--color-primary);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    transition: var(--transition);
+    border: 2px solid var(--color-white);
+}
+.btn-primary:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-white);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+}
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 36px;
+    background: transparent;
+    color: var(--color-white);
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 50px;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    transition: var(--transition);
+}
+.btn-ghost:hover {
+    background: var(--color-white);
+    border-color: var(--color-white);
+    color: var(--color-primary);
+}
+.recruit-img {
+    flex: 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+}
+.recruit-img img {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+}
+.recruit-img::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    background: var(--color-primary-pale);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/* =============================================
+   USEFUL LINKS
+   ============================================= */
+.useful-section {
+    padding: 100px 0;
+    background: var(--color-warm);
+    position: relative;
+    overflow: hidden;
+}
+.useful-section::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 280px;
+    height: 280px;
+    background-image: radial-gradient(var(--color-accent) 1.5px, transparent 1.5px);
+    background-size: 20px 20px;
+    opacity: 0.06;
+    pointer-events: none;
+}
+.useful-section::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 180px;
+    height: 180px;
+    border: 2px solid var(--color-primary-light);
+    border-radius: 50%;
+    opacity: 0.1;
+    pointer-events: none;
+}
+.useful-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+.useful-item {
+    border-radius: var(--radius-lg);
+    text-align: center;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 24px 32px;
+    background: var(--color-white);
+    border: none;
+    position: relative;
+    overflow: hidden;
+    min-height: auto;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.04);
+}
+.useful-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    transition: height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s ease;
+    z-index: 0;
+}
+.useful-item:nth-child(1)::before {
+    background: linear-gradient(135deg, rgba(90,122,58,0.82), rgba(122,159,84,0.82)),
+                url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&h=300&fit=crop') center/cover no-repeat;
+}
+.useful-item:nth-child(2)::before {
+    background: linear-gradient(135deg, rgba(58,106,138,0.82), rgba(90,148,184,0.82)),
+                url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=300&fit=crop') center/cover no-repeat;
+}
+.useful-item:nth-child(3)::before {
+    background: linear-gradient(135deg, rgba(154,122,74,0.82), rgba(200,166,106,0.82)),
+                url('https://images.unsplash.com/photo-1553877522-43269d4ea984?w=500&h=300&fit=crop') center/cover no-repeat;
+}
+.useful-item:nth-child(4)::before {
+    background: linear-gradient(135deg, rgba(122,74,138,0.82), rgba(160,106,184,0.82)),
+                url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500&h=300&fit=crop') center/cover no-repeat;
+}
+.useful-item:nth-child(5)::before {
+    background: linear-gradient(135deg, rgba(58,122,106,0.82), rgba(90,176,154,0.82)),
+                url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=500&h=300&fit=crop') center/cover no-repeat;
+}
+.useful-item:nth-child(6)::before {
+    background: linear-gradient(135deg, rgba(138,80,80,0.82), rgba(184,112,112,0.82)),
+                url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=500&h=300&fit=crop') center/cover no-repeat;
+}
+.useful-item:nth-child(1) { background: linear-gradient(180deg, #fff 30%, rgba(90,122,58,0.07) 100%); }
+.useful-item:nth-child(2) { background: linear-gradient(180deg, #fff 30%, rgba(58,106,138,0.07) 100%); }
+.useful-item:nth-child(3) { background: linear-gradient(180deg, #fff 30%, rgba(154,122,74,0.07) 100%); }
+.useful-item:nth-child(4) { background: linear-gradient(180deg, #fff 30%, rgba(122,74,138,0.07) 100%); }
+.useful-item:nth-child(5) { background: linear-gradient(180deg, #fff 30%, rgba(58,122,106,0.07) 100%); }
+.useful-item:nth-child(6) { background: linear-gradient(180deg, #fff 30%, rgba(138,80,80,0.07) 100%); }
+.useful-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+}
+.useful-item:hover::before {
+    height: 153px;
+    filter: brightness(1.15);
+}
+
+.useful-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: #fff;
+    margin-top: 36px;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+    transition: var(--transition);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.useful-icon svg {
+    width: 30px;
+    height: 30px;
+}
+.useful-item:hover .useful-icon {
+    transform: scale(1.12) translateY(-3px);
+    background: rgba(255,255,255,0.3);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+    border-color: rgba(255,255,255,0.5);
+}
+
+.useful-title {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--color-text);
+    position: relative;
+    z-index: 1;
+    text-shadow: none;
+}
+.useful-sub {
+    font-family: var(--font-serif);
+    font-size: 11px;
+    color: var(--color-text-muted);
+    margin-top: 5px;
+    letter-spacing: 0.12em;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+}
+.useful-arrow {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    font-size: 14px;
+    margin-top: 20px;
+    transition: var(--transition);
+    position: relative;
+    z-index: 1;
+}
+.useful-item:nth-child(1) .useful-arrow { background: #e8f0de; color: #5a7a3a; }
+.useful-item:nth-child(2) .useful-arrow { background: #deeaf4; color: #3a6a8a; }
+.useful-item:nth-child(3) .useful-arrow { background: #f5ebde; color: #9a7a4a; }
+.useful-item:nth-child(4) .useful-arrow { background: #eee0f4; color: #7a4a8a; }
+.useful-item:nth-child(5) .useful-arrow { background: #ddf2ee; color: #3a7a6a; }
+.useful-item:nth-child(6) .useful-arrow { background: #f5e0e0; color: #8a5050; }
+.useful-item:hover .useful-arrow {
+    transform: translateX(4px);
+}
+.useful-item:nth-child(1):hover .useful-arrow { background: #5a7a3a; color: #fff; }
+.useful-item:nth-child(2):hover .useful-arrow { background: #3a6a8a; color: #fff; }
+.useful-item:nth-child(3):hover .useful-arrow { background: #9a7a4a; color: #fff; }
+.useful-item:nth-child(4):hover .useful-arrow { background: #7a4a8a; color: #fff; }
+.useful-item:nth-child(5):hover .useful-arrow { background: #3a7a6a; color: #fff; }
+.useful-item:nth-child(6):hover .useful-arrow { background: #8a5050; color: #fff; }
+
+/* =============================================
+   CAMPAIGN
+   ============================================= */
+.campaign-section {
+    padding: 120px 0;
+    background: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+}
+.campaign-section::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    border: 3px solid var(--color-accent-light);
+    border-radius: 50%;
+    opacity: 0.2;
+    pointer-events: none;
+}
+.campaign-section::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -80px;
+    width: 200px;
+    height: 200px;
+    background: var(--color-primary-pale);
+    border-radius: 50%;
+    opacity: 0.3;
+    pointer-events: none;
+}
+.campaign-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 30px;
+    position: relative;
+    z-index: 1;
+}
+.campaign-banner {
+    display: block;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: var(--transition);
+    background: var(--color-white);
+    box-shadow: var(--shadow-medium);
+    position: relative;
+}
+.campaign-banner::before {
+    content: 'CAMPAIGN';
+    position: absolute;
+    top: 20px;
+    right: -30px;
+    background: var(--color-accent);
+    color: var(--color-white);
+    padding: 6px 50px;
+    font-family: var(--font-serif);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    transform: rotate(30deg);
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.campaign-banner:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-6px);
+}
+.campaign-image {
+    width: 100%;
+    height: 400px;
+    background: url('https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=1200&h=600&fit=crop') center/cover;
+    position: relative;
+}
+.campaign-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.5) 0%, transparent 50%);
+}
+.campaign-label {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    z-index: 2;
+    background: var(--color-accent);
+    color: var(--color-white);
+    padding: 8px 22px;
+    border-radius: 4px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(200,149,108,0.4);
+}
+.campaign-body {
+    padding: 36px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--color-white) 0%, var(--color-warm) 100%);
+}
+.campaign-body h3 {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    margin-bottom: 12px;
+    letter-spacing: 0.08em;
+    background: linear-gradient(135deg, var(--color-text) 0%, var(--color-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.campaign-body p {
+    color: var(--color-text-light);
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+/* =============================================
+   PROMO BANNERS
+   ============================================= */
+.promo-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.promo-banner {
+    height: 200px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+.promo-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(42,42,40,0.55);
+    transition: background 0.4s;
+}
+.promo-banner:hover::before {
+    background: rgba(42,42,40,0.35);
+}
+.promo-banner:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=500&h=400&fit=crop'); }
+.promo-banner:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=500&h=400&fit=crop'); }
+.promo-banner:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=500&h=400&fit=crop'); }
+.promo-banner:nth-child(4) { background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=500&h=400&fit=crop'); }
+.promo-banner:nth-child(5) { background-image: url('https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&h=400&fit=crop'); }
+.promo-banner:nth-child(6) { background-image: url('https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=500&h=400&fit=crop'); }
+.promo-banner:nth-child(7) { background-image: url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500&h=400&fit=crop'); }
+.promo-banner:nth-child(8) { background-image: url('https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500&h=400&fit=crop'); }
+
+.promo-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: var(--color-white);
+}
+.promo-content h3 {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    margin-bottom: 6px;
+    letter-spacing: 0.12em;
+    font-weight: 400;
+}
+.promo-content p {
+    font-size: 12px;
+    margin: 0 0 12px;
+    opacity: 0.8;
+    letter-spacing: 0.05em;
+}
+.promo-arrow {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: var(--transition);
+}
+.promo-banner:hover .promo-arrow {
+    background: var(--color-white);
+    color: var(--color-text);
+    border-color: var(--color-white);
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+footer {
+    background: var(--color-dark);
+    color: var(--color-white);
+    padding: 80px 0 40px;
+    font-size: 13px;
+}
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+}
+.footer-col { flex: 1; min-width: 200px; }
+.footer-col h3 {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+}
+.footer-col li { margin-bottom: 10px; }
+.footer-col a {
+    color: rgba(255,255,255,0.65);
+    transition: var(--transition);
+    display: inline-block;
+    font-size: 13px;
+}
+.footer-col a:hover {
+    color: var(--color-white);
+    transform: translateX(4px);
+}
+.footer-bottom {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+.footer-logo {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    letter-spacing: 0.15em;
+    background: linear-gradient(90deg, rgba(255,255,255,0.6) 0%, rgba(200,149,108,0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.footer-social {
+    display: flex;
+    gap: 12px;
+}
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50%;
+    color: rgba(255,255,255,0.5);
+    transition: var(--transition);
+}
+.social-link:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+    color: var(--color-white);
+}
+.social-link svg { width: 18px; height: 18px; }
+.copyright {
+    text-align: center;
+    margin-top: 30px;
+    color: rgba(255,255,255,0.3);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+}
+
+/* =============================================
+   PAGE TOP BUTTON
+   ============================================= */
+.page-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 900;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(90,122,58,0.3);
+}
+.page-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.page-top:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(90,122,58,0.4);
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 1024px) {
+    .promo-section { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+    header { padding: 0 20px; }
+    .hero h1 { font-size: 28px; }
+    .hero-controls { padding: 0 15px; }
+    .hero-prev, .hero-next { width: 40px; height: 40px; font-size: 18px; }
+    .hero-indicators { bottom: 60px; }
+    .concept { padding: 80px 0; }
+    .concept p { font-size: 17px; text-align: center; padding: 0 20px; }
+    .section-header h2 { font-size: 32px; }
+    .section-header { margin-bottom: 40px; }
+    .service-section, .ecshop-section, .recruit-section, .campaign-section { padding: 80px 0; }
+    .service-grid { grid-template-columns: 1fr; gap: 20px; }
+    .service-item { padding: 28px; }
+    .ecshop-grid { grid-template-columns: 1fr; gap: 20px; }
+    .recruit-content { flex-direction: column; gap: 30px; }
+    .recruit-img img { height: 280px; }
+    .recruit-buttons { flex-direction: column; }
+    .recruit-buttons a { width: 100%; text-align: center; justify-content: center; }
+    .useful-section { padding: 80px 0; }
+    .useful-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .useful-item::before { height: 130px; }
+    .useful-item:hover::before { height: 138px; }
+    .useful-icon { width: 64px; height: 64px; margin-top: 30px; margin-bottom: 36px; }
+    .promo-section { grid-template-columns: 1fr; }
+    .promo-banner { height: 160px; }
+    .footer-container { flex-direction: column; gap: 30px; }
+    .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+    .campaign-image { height: 250px; }
+}
+@media (max-width: 480px) {
+    .useful-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <a href="#">
+            <img src="images/logo.png" alt="UNIMAT LIFE Symbol">
+            <img src="images/logo_type.png" alt="UNIMAT LIFE" style="height: 22px; margin-top: 4px;">
+        </a>
+    </div>
+
+    <nav class="global-menu" id="globalMenu">
+        <div class="menu-container">
+            <ul>
+                <li class="menu-item"><a href="#" class="menu-link">TOP<span class="sub-text">トップ</span></a></li>
+                <li class="menu-item">
+                    <div class="menu-toggle">COMPANY<span class="sub-text">企業情報</span></div>
+                    <ul class="sub-menu">
+                        <div class="sub-menu-inner">
+                            <div class="sub-menu-heading">
+                                <div class="heading-en">COMPANY</div>
+                                <div class="heading-jp">企業情報</div>
+                                <div class="heading-line"></div>
+                                <div class="heading-desc">ユニマットライフの理念や<br>会社情報をご紹介します</div>
+                            </div>
+                            <div class="sub-menu-links">
+                                <li><a href="#">企業理念・代表メッセージ</a></li>
+                                <li><a href="#">行動指針</a></li>
+                                <li><a href="#">会社概要</a></li>
+                                <li><a href="#">財務情報</a></li>
+                                <li><a href="#">電子公告</a></li>
+                                <li><a href="#">適格請求書発行業者</a></li>
+                                <li><a href="#">マルチステークホルダー方針</a></li>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <div class="menu-toggle">SERVICE<span class="sub-text">事業内容</span></div>
+                    <ul class="sub-menu">
+                        <div class="sub-menu-inner">
+                            <div class="sub-menu-heading">
+                                <div class="heading-en">SERVICE</div>
+                                <div class="heading-jp">事業内容</div>
+                                <div class="heading-line"></div>
+                                <div class="heading-desc">多彩なサービスで暮らしと<br>ビジネスをサポートします</div>
+                            </div>
+                            <div class="sub-menu-links">
+                                <li><a href="#">オフィスコーヒーサービス</a></li>
+                                <li><a href="#">環境美化用品レンタル</a></li>
+                                <li><a href="#">オフィス事務機器</a></li>
+                                <li><a href="#">リノベーション事業</a></li>
+                                <li><a href="#">調剤薬局事業</a></li>
+                                <li><a href="#">リネンサプライ事業</a></li>
+                                <li><a href="#">クリーンメンテナンス事業</a></li>
+                                <li><a href="#">コーヒー・カフェ・パティスリー事業</a></li>
+                                <li><a href="#">事業所一覧</a></li>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <div class="menu-toggle">NEWS<span class="sub-text">お知らせ</span></div>
+                    <ul class="sub-menu">
+                        <div class="sub-menu-inner">
+                            <div class="sub-menu-heading">
+                                <div class="heading-en">NEWS</div>
+                                <div class="heading-jp">お知らせ</div>
+                                <div class="heading-line"></div>
+                                <div class="heading-desc">最新のニュースや<br>お知らせをお届けします</div>
+                            </div>
+                            <div class="sub-menu-links">
+                                <li><a href="#">すべて</a></li>
+                                <li><a href="#">商品情報</a></li>
+                                <li><a href="#">企業情報</a></li>
+                                <li><a href="#">採用情報</a></li>
+                                <li><a href="#">その他</a></li>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="#" class="menu-link">RECRUIT<span class="sub-text">採用情報</span></a></li>
+                <li class="menu-item">
+                    <div class="menu-toggle">CONTACT<span class="sub-text">お問い合わせ</span></div>
+                    <ul class="sub-menu">
+                        <div class="sub-menu-inner">
+                            <div class="sub-menu-heading">
+                                <div class="heading-en">CONTACT</div>
+                                <div class="heading-jp">お問い合わせ</div>
+                                <div class="heading-line"></div>
+                                <div class="heading-desc">各種お問い合わせは<br>こちらからお願いします</div>
+                            </div>
+                            <div class="sub-menu-links">
+                                <li><a href="#">ご意見・ご要望</a></li>
+                                <li><a href="#">オフィスコーヒーサービス【資料請求・見積依頼】</a></li>
+                                <li><a href="#">環境美化用品レンタルサービス【資料請求・見積依頼】</a></li>
+                                <li><a href="#">調剤薬局事業に関するお問い合わせ</a></li>
+                                <li><a href="#">リネンサプライ事業【資料請求・見積依頼】</a></li>
+                                <li><a href="#">採用担当者へお問い合わせ</a></li>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+            <div class="mobile-menu-footer">
+                <div class="mobile-menu-tagline">暮らしの中にゆとりと、やすらぎを</div>
+                <div class="mobile-menu-copyright">&copy; UNIMAT LIFE Corporation</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="header-actions">
+        <div class="search-trigger" id="searchTrigger">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M19 19L14.65 14.65" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </div>
+        <div class="menu-trigger" id="menuTrigger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
+
+<!-- 検索オーバーレイ -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-container">
+        <form class="search-form" action="#" method="get">
+            <input type="text" name="q" class="search-input" id="searchInput" placeholder="キーワードを入力..." autocomplete="off" required>
+            <button type="submit" class="search-submit">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#555" stroke-width="1.5"/><path d="M21 21L16.65 16.65" stroke="#555" stroke-width="1.5"/></svg>
+            </button>
+            <button type="button" class="search-close" id="searchClose">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="#555" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- =============================================
+     HERO
+     ============================================= -->
+<section class="hero">
+    <div class="hero-slider">
+        <div class="hero-slide active">
+            <div class="hero-content">
+                <h1>暮らしの中に<br>ゆとりと、やすらぎを</h1>
+                <p>To provide relaxation and comfort</p>
+            </div>
+        </div>
+        <div class="hero-slide">
+            <div class="hero-content">
+                <h1>一杯のコーヒーが<br>生み出す、豊かな時間</h1>
+                <p>A cup of coffee creates rich moments</p>
+            </div>
+        </div>
+        <div class="hero-slide">
+            <div class="hero-content">
+                <h1>快適なオフィス環境を<br>すべての方に</h1>
+                <p>Comfortable office environment for everyone</p>
+            </div>
+        </div>
+        <div class="hero-slide">
+            <div class="hero-content">
+                <h1>美しい空間づくりを<br>お手伝いします</h1>
+                <p>Creating beautiful spaces together</p>
+            </div>
+        </div>
+        <div class="hero-slide">
+            <div class="hero-content">
+                <h1>人と社会をつなぐ<br>サービスを</h1>
+                <p>Services connecting people and society</p>
+            </div>
+        </div>
+    </div>
+    <div class="hero-controls">
+        <button class="hero-prev" aria-label="前のスライド">&#8249;</button>
+        <button class="hero-next" aria-label="次のスライド">&#8250;</button>
+    </div>
+    <div class="hero-indicators">
+        <button class="hero-indicator active" data-slide="0" aria-label="スライド1"></button>
+        <button class="hero-indicator" data-slide="1" aria-label="スライド2"></button>
+        <button class="hero-indicator" data-slide="2" aria-label="スライド3"></button>
+        <button class="hero-indicator" data-slide="3" aria-label="スライド4"></button>
+        <button class="hero-indicator" data-slide="4" aria-label="スライド5"></button>
+    </div>
+    <div class="scroll-down">SCROLL</div>
+</section>
+
+<!-- =============================================
+     CONCEPT
+     ============================================= -->
+<section class="concept container fade-in">
+    <p>ユニマットライフは、オフィスからご家庭まで<br>
+    <span class="highlight">「ゆとり」と「やすらぎ」</span>をお届けする企業です。<br>
+    お客様一人ひとりの空間に寄り添い、<br>
+    心地よい時間を作り出します。</p>
+    <span class="concept-deco"></span>
+</section>
+
+<!-- Wave Divider -->
+<div class="wave-divider">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z" fill="#f5efe6"/></svg>
+</div>
+
+<!-- =============================================
+     NEWS
+     ============================================= -->
+<section class="news">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>NEWS &amp; TOPICS</h2>
+            <span class="section-sub">お知らせ</span>
+            <span class="section-line"></span>
+        </div>
+        <ul class="news-list fade-in">
+            <li>
+                <span class="news-date">2025.10.01</span>
+                <span class="news-tag news-tag--product">商品情報</span>
+                <span class="news-title">新商品「プレミアムブレンド」の取り扱いを開始しました</span>
+            </li>
+            <li>
+                <span class="news-date">2025.09.15</span>
+                <span class="news-tag news-tag--recruit">採用情報</span>
+                <span class="news-title">採用情報を更新しました（2026年度新卒採用）</span>
+            </li>
+            <li>
+                <span class="news-date">2025.08.01</span>
+                <span class="news-tag news-tag--info">お知らせ</span>
+                <span class="news-title">夏季休業期間のお知らせ</span>
+            </li>
+        </ul>
+        <div class="news-more fade-in">
+            <a href="#" class="btn-outline">一覧を見る <span class="arrow">→</span></a>
+        </div>
+    </div>
+</section>
+
+<!-- =============================================
+     SERVICE
+     ============================================= -->
+<section class="service-section">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>SERVICE</h2>
+            <span class="section-sub">事業紹介</span>
+            <span class="section-line"></span>
+        </div>
+        <div class="service-grid">
+            <div class="service-item fade-in" data-num="01">
+                <div class="service-body">
+                    <span class="service-num">01. Office Coffee Service</span>
+                    <h3 class="service-title">オフィスコーヒーサービス</h3>
+                    <p class="service-desc">オフィス内で利用されるコーヒー・お茶・水の全てをユニマットライフが提供します。ほっと一息いれて気分をリフレッシュすれば、作業効率もアップします。</p>
+                    <a href="#" class="btn-service">詳しく見る <span class="arrow">→</span></a>
+                </div>
+            </div>
+            <div class="service-item fade-in" data-num="02">
+                <div class="service-body">
+                    <span class="service-num">02. Rental Service</span>
+                    <h3 class="service-title">環境美化用品レンタル</h3>
+                    <p class="service-desc">オフィスや店舗・工場などの快適な環境づくりを目指して、レンタル用マットやモップなどの環境美化用品を提供しております。</p>
+                    <a href="#" class="btn-service">詳しく見る <span class="arrow">→</span></a>
+                </div>
+            </div>
+            <div class="service-item fade-in" data-num="03">
+                <div class="service-body">
+                    <span class="service-num">03. Office Equipment</span>
+                    <h3 class="service-title">オフィス事務機器</h3>
+                    <p class="service-desc">豊富なオフィス機器・什器を所有し、急なご用命にもスピーディーにご対応が可能。ITインフラの構築から消耗品サプライ調達まで対応いたします。</p>
+                    <a href="#" class="btn-service">詳しく見る <span class="arrow">→</span></a>
+                </div>
+            </div>
+            <div class="service-item fade-in" data-num="04">
+                <div class="service-body">
+                    <span class="service-num">04. Renovation</span>
+                    <h3 class="service-title">リノベーション事業</h3>
+                    <p class="service-desc">「資源の有効活用」や「利便性」「効率」だけに留まらず、働く方達の環境を考えることにより、ビジネス成果や結果に貢献致します。</p>
+                    <a href="#" class="btn-service">詳しく見る <span class="arrow">→</span></a>
+                </div>
+            </div>
+            <div class="service-item fade-in" data-num="05">
+                <div class="service-body">
+                    <span class="service-num">05. Pharmacy</span>
+                    <h3 class="service-title">調剤薬局事業</h3>
+                    <p class="service-desc">ゆとりと安らぎをテーマに運営してきた経験を薬局事業に活かし、お薬を利用される方の立場にたった薬局を運営しています。</p>
+                    <a href="#" class="btn-service">詳しく見る <span class="arrow">→</span></a>
+                </div>
+            </div>
+            <div class="service-item fade-in" data-num="06">
+                <div class="service-body">
+                    <span class="service-num">06. Linen Service</span>
+                    <h3 class="service-title">リネンサプライ事業</h3>
+                    <p class="service-desc">高品質のリネンサプライ・ユニフォームレンタルをご提供いたします。</p>
+                    <a href="#" class="btn-service">詳しく見る <span class="arrow">→</span></a>
+                </div>
+            </div>
+            <div class="service-item fade-in" data-num="07">
+                <div class="service-body">
+                    <span class="service-num">07. Clean Maintenance</span>
+                    <h3 class="service-title">クリーンメンテナンス事業</h3>
+                    <p class="service-desc">" 環境にやさしい " 画期的なクリーニングシステムで、オフィスを始め店舗や住居のあらゆるクリーニングを可能にしました。</p>
+                    <a href="#" class="btn-service">詳しく見る <span class="arrow">→</span></a>
+                </div>
+            </div>
+            <div class="service-item fade-in" data-num="08">
+                <div class="service-body">
+                    <span class="service-num">08. Coffee &amp; Cafe &amp; Patisserie</span>
+                    <h3 class="service-title">コーヒー・カフェ・パティスリー事業</h3>
+                    <p class="service-desc">「キャラバンコーヒー」を主軸としたコーヒー豆の輸入・焙煎・販売、「ベルグの４月」の運営、「NINA'S」日本総代理店を展開しています。</p>
+                    <a href="#" class="btn-service">詳しく見る <span class="arrow">→</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =============================================
+     EC SHOP
+     ============================================= -->
+<section class="ecshop-section">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>EC SHOP</h2>
+            <span class="section-sub">オンラインショップ</span>
+            <span class="section-line"></span>
+        </div>
+        <div class="ecshop-grid">
+            <a href="https://www.unimat-shop.jp/" class="ecshop-item fade-in" target="_blank" rel="noopener noreferrer">
+                <div class="ecshop-img"></div>
+                <div class="ecshop-body">
+                    <h3 class="ecshop-title">OCS</h3>
+                    <p class="ecshop-desc">オフィスコーヒーサービスのオンラインショップ</p>
+                    <span class="ecshop-link">ショップを見る →</span>
+                </div>
+            </a>
+            <a href="https://www.caravan-coffee.jp/" class="ecshop-item fade-in" target="_blank" rel="noopener noreferrer">
+                <div class="ecshop-img"></div>
+                <div class="ecshop-body">
+                    <h3 class="ecshop-title">キャラバンコーヒー</h3>
+                    <p class="ecshop-desc">1928年創業のコーヒーブランド</p>
+                    <span class="ecshop-link">ショップを見る →</span>
+                </div>
+            </a>
+            <a href="https://www.ninas-marieantoinette.jp/" class="ecshop-item fade-in" target="_blank" rel="noopener noreferrer">
+                <div class="ecshop-img"></div>
+                <div class="ecshop-body">
+                    <h3 class="ecshop-title">ニナス</h3>
+                    <p class="ecshop-desc">フランスの紅茶ブランド「NINA'S」</p>
+                    <span class="ecshop-link">ショップを見る →</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- =============================================
+     RECRUIT
+     ============================================= -->
+<div class="recruit-wave-divider-top">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,0 L0,0 Z" fill="#f5efe6"/></svg>
+</div>
+<section class="recruit-section">
+    <div class="recruit-inner-deco"></div>
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>RECRUIT</h2>
+            <span class="section-sub">採用情報</span>
+            <span class="section-line"></span>
+        </div>
+        <div class="recruit-content">
+            <div class="recruit-text fade-in-left">
+                <p class="recruit-desc">
+                    一緒に「ゆとり」と「やすらぎ」を<br>
+                    お届けする仲間になりませんか？<br><br>
+                    ユニマットライフでは、多様な人材が活躍できる環境づくりに取り組んでいます。<br>
+                    あなたの可能性を最大限に発揮できる場所が、ここにあります。
+                </p>
+                <div class="recruit-buttons">
+                    <a href="#" class="btn-primary">新卒・既卒・第2新卒採用</a>
+                    <a href="#" class="btn-ghost">中途採用</a>
+                </div>
+            </div>
+            <div class="recruit-img fade-in-right">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop" alt="採用イメージ">
+            </div>
+        </div>
+    </div>
+</section>
+<div class="recruit-wave-divider-bottom">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,0 720,80 1080,40 C1260,20 1380,30 1440,40 L1440,80 L0,80 Z" fill="#f5efe6"/></svg>
+</div>
+
+<!-- =============================================
+     USEFUL LINKS
+     ============================================= -->
+<section class="useful-section">
+    <div class="container">
+        <div class="useful-grid">
+            <a href="#" class="useful-item fade-in">
+                <div class="useful-icon">
+                    <svg viewBox="0 0 32 32" fill="none"><path d="M16 4l12 8v14H4V12L16 4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="16" cy="17" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M10 26v-4a6 6 0 0112 0v4" stroke="currentColor" stroke-width="1.2" opacity="0.5"/></svg>
+                </div>
+                <span class="useful-title">事業所一覧</span>
+                <span class="useful-sub">Office List</span>
+                <span class="useful-arrow">→</span>
+            </a>
+            <a href="#" class="useful-item fade-in">
+                <div class="useful-icon">
+                    <svg viewBox="0 0 32 32" fill="none"><rect x="4" y="6" width="24" height="18" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M4 12h24" stroke="currentColor" stroke-width="1.4"/><path d="M10 17h6M10 21h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/><circle cx="24" cy="20" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M24 18v2h2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+                </div>
+                <span class="useful-title">WEB請求システム</span>
+                <span class="useful-sub">Unimat Concierge</span>
+                <span class="useful-arrow">→</span>
+            </a>
+            <a href="#" class="useful-item fade-in">
+                <div class="useful-icon">
+                    <svg viewBox="0 0 32 32" fill="none"><rect x="6" y="4" width="20" height="24" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M10 10h12M10 15h8M10 20h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/><path d="M22 18l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span class="useful-title">商品カタログ</span>
+                <span class="useful-sub">Product Catalog</span>
+                <span class="useful-arrow">→</span>
+            </a>
+            <a href="#" class="useful-item fade-in">
+                <div class="useful-icon">
+                    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M6 28c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="1.4"/><path d="M22 8l2-2M24 10l2-1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/></svg>
+                </div>
+                <span class="useful-title">採用について</span>
+                <span class="useful-sub">Recruit</span>
+                <span class="useful-arrow">→</span>
+            </a>
+            <a href="#" class="useful-item fade-in">
+                <div class="useful-icon">
+                    <svg viewBox="0 0 32 32" fill="none"><rect x="4" y="8" width="24" height="18" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M4 14h24" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="11" r="1.5" fill="currentColor" opacity="0.3"/><circle cx="14" cy="11" r="1.5" fill="currentColor" opacity="0.3"/><path d="M10 20h12M10 24h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/></svg>
+                </div>
+                <span class="useful-title">会社概要</span>
+                <span class="useful-sub">Company Overview</span>
+                <span class="useful-arrow">→</span>
+            </a>
+            <a href="#" class="useful-item fade-in">
+                <div class="useful-icon">
+                    <svg viewBox="0 0 32 32" fill="none"><path d="M6 6h20v16H14l-6 4v-4H6V6z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 13h8M12 17h5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/><circle cx="11" cy="10" r="1" fill="currentColor" opacity="0.3"/></svg>
+                </div>
+                <span class="useful-title">お問い合わせ</span>
+                <span class="useful-sub">Contact</span>
+                <span class="useful-arrow">→</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- =============================================
+     CAMPAIGN
+     ============================================= -->
+<section class="campaign-section">
+    <div class="campaign-container">
+        <div class="section-header fade-in">
+            <h2>SPECIAL CAMPAIGN</h2>
+            <span class="section-sub">特集キャンペーン</span>
+            <span class="section-line"></span>
+        </div>
+        <a href="#" class="campaign-banner fade-in">
+            <div class="campaign-image">
+                <span class="campaign-label">期間限定</span>
+            </div>
+            <div class="campaign-body">
+                <h3>年末大掃除特集</h3>
+                <p>オフィスの清掃ならお任せください。<br>プロの技術で徹底的にきれいにします。</p>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- =============================================
+     PROMO BANNERS
+     ============================================= -->
+<section class="promo-section">
+    <a href="https://www.unimat-life.co.jp/ocs/" class="promo-banner">
+        <div class="promo-content">
+            <h3>OFFICE COFFEE</h3>
+            <p>オフィスコーヒーサービス</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+    <a href="https://www.unimat-life.co.jp/rs/" class="promo-banner">
+        <div class="promo-content">
+            <h3>RENTAL SERVICE</h3>
+            <p>環境美化用品レンタル</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+    <a href="https://unimat-totele.jp/" class="promo-banner">
+        <div class="promo-content">
+            <h3>OFFICE EQUIPMENT</h3>
+            <p>オフィス事務機器</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+    <a href="https://unimat-renovation.jp/" class="promo-banner">
+        <div class="promo-content">
+            <h3>RENOVATION</h3>
+            <p>リノベーション事業</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+    <a href="https://www.unimat-life.co.jp/drugstore/" class="promo-banner">
+        <div class="promo-content">
+            <h3>PHARMACY</h3>
+            <p>調剤薬局</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+    <a href="https://www.unimat-life.co.jp/linen/" class="promo-banner">
+        <div class="promo-content">
+            <h3>LINEN SERVICE</h3>
+            <p>リネンサプライ事業</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+    <a href="https://www.unimat-life.co.jp/rs/cleaning/" class="promo-banner">
+        <div class="promo-content">
+            <h3>CLEAN MAINTENANCE</h3>
+            <p>クリーンメンテナンス事業</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+    <a href="https://www.unimat-caravan.co.jp/" class="promo-banner">
+        <div class="promo-content">
+            <h3>COFFEE &amp; CAFE</h3>
+            <p>コーヒー・カフェ・パティスリー</p>
+            <span class="promo-arrow">→</span>
+        </div>
+    </a>
+</section>
+
+<!-- =============================================
+     FOOTER
+     ============================================= -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-col">
+            <h3>COMPANY</h3>
+            <ul>
+                <li><a href="#">企業理念・代表メッセージ</a></li>
+                <li><a href="#">行動指針</a></li>
+                <li><a href="#">会社概要</a></li>
+                <li><a href="#">財務情報</a></li>
+                <li><a href="#">電子公告</a></li>
+                <li><a href="#">適格請求書発行業者</a></li>
+                <li><a href="#">マルチステークホルダー方針</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>SERVICE</h3>
+            <ul>
+                <li><a href="#">オフィスコーヒーサービス</a></li>
+                <li><a href="#">環境美化用品レンタル</a></li>
+                <li><a href="#">オフィス事務機器</a></li>
+                <li><a href="#">リノベーション事業</a></li>
+                <li><a href="#">調剤薬局事業</a></li>
+                <li><a href="#">リネンサプライ事業</a></li>
+                <li><a href="#">クリーンメンテナンス事業</a></li>
+                <li><a href="#">コーヒー・カフェ・パティスリー事業</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>NEWS</h3>
+            <ul>
+                <li><a href="#">すべて</a></li>
+                <li><a href="#">商品情報</a></li>
+                <li><a href="#">企業情報</a></li>
+                <li><a href="#">採用情報</a></li>
+                <li><a href="#">その他</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>CONTACT</h3>
+            <ul>
+                <li><a href="#">ご意見・ご要望</a></li>
+                <li><a href="#">オフィスコーヒーサービス</a></li>
+                <li><a href="#">環境美化用品レンタル</a></li>
+                <li><a href="#">調剤薬局事業</a></li>
+                <li><a href="#">リネンサプライ事業</a></li>
+                <li><a href="#">採用担当者へ</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-logo">UNIMAT LIFE</span>
+        <div class="footer-social">
+            <a href="https://www.instagram.com/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="currentColor"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+    <p class="copyright">&copy; UNIMAT LIFE CORPORATION. All Rights Reserved.</p>
+</footer>
+
+<!-- Page Top -->
+<button class="page-top" id="pageTop" aria-label="ページトップへ">&#8593;</button>
+
+<script>
+/* =============================================
+   MENU
+   ============================================= */
+const menuTrigger = document.getElementById('menuTrigger');
+const globalMenu = document.getElementById('globalMenu');
+const menuLinks = document.querySelectorAll('.menu-link');
+const menuToggles = document.querySelectorAll('.menu-toggle');
+
+menuTrigger.addEventListener('click', () => {
+    menuTrigger.classList.toggle('active');
+    globalMenu.classList.toggle('active');
+});
+
+menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        menuTrigger.classList.remove('active');
+        globalMenu.classList.remove('active');
+    });
+});
+
+menuToggles.forEach(toggle => {
+    toggle.addEventListener('click', function() {
+        if (window.innerWidth >= 769) return;
+        this.classList.toggle('open');
+        const subMenu = this.nextElementSibling;
+        if (subMenu.classList.contains('is-open')) {
+            subMenu.classList.remove('is-open');
+            subMenu.style.height = null;
+        } else {
+            subMenu.classList.add('is-open');
+            subMenu.style.height = subMenu.scrollHeight + 'px';
+        }
+    });
+});
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth >= 769) {
+        document.querySelectorAll('.sub-menu').forEach(el => { el.style.height = null; el.classList.remove('is-open'); });
+        document.querySelectorAll('.menu-toggle').forEach(el => el.classList.remove('open'));
+        menuTrigger.classList.remove('active');
+        globalMenu.classList.remove('active');
+    }
+});
+
+/* =============================================
+   SEARCH
+   ============================================= */
+const searchTrigger = document.getElementById('searchTrigger');
+const searchOverlay = document.getElementById('searchOverlay');
+const searchClose = document.getElementById('searchClose');
+const searchInput = document.getElementById('searchInput');
+
+searchTrigger.addEventListener('click', () => {
+    searchOverlay.classList.add('active');
+    setTimeout(() => searchInput.focus(), 100);
+});
+searchClose.addEventListener('click', () => { searchOverlay.classList.remove('active'); searchInput.value = ''; });
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && searchOverlay.classList.contains('active')) { searchOverlay.classList.remove('active'); searchInput.value = ''; }
+});
+searchOverlay.addEventListener('click', (e) => {
+    if (e.target === searchOverlay) { searchOverlay.classList.remove('active'); searchInput.value = ''; }
+});
+
+/* =============================================
+   HERO SLIDER
+   ============================================= */
+const heroSlides = document.querySelectorAll('.hero-slide');
+const heroIndicators = document.querySelectorAll('.hero-indicator');
+const heroPrev = document.querySelector('.hero-prev');
+const heroNext = document.querySelector('.hero-next');
+let currentSlide = 0;
+let slideInterval;
+
+function showSlide(index) {
+    heroSlides.forEach(s => s.classList.remove('active'));
+    heroIndicators.forEach(i => i.classList.remove('active'));
+    heroSlides[index].classList.add('active');
+    heroIndicators[index].classList.add('active');
+    currentSlide = index;
+}
+function nextSlide() { showSlide((currentSlide + 1) % heroSlides.length); }
+function prevSlide() { showSlide((currentSlide - 1 + heroSlides.length) % heroSlides.length); }
+function startAutoSlide() { slideInterval = setInterval(nextSlide, 5000); }
+function stopAutoSlide() { clearInterval(slideInterval); }
+
+if (heroNext) heroNext.addEventListener('click', () => { nextSlide(); stopAutoSlide(); startAutoSlide(); });
+if (heroPrev) heroPrev.addEventListener('click', () => { prevSlide(); stopAutoSlide(); startAutoSlide(); });
+heroIndicators.forEach((ind, i) => {
+    ind.addEventListener('click', () => { showSlide(i); stopAutoSlide(); startAutoSlide(); });
+});
+if (heroSlides.length > 0) startAutoSlide();
+
+/* =============================================
+   HEADER SCROLL EFFECT
+   ============================================= */
+const header = document.querySelector('header');
+window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+/* =============================================
+   SCROLL ANIMATIONS (Intersection Observer)
+   ============================================= */
+const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => observer.observe(el));
+
+/* =============================================
+   PAGE TOP BUTTON
+   ============================================= */
+const pageTopBtn = document.getElementById('pageTop');
+window.addEventListener('scroll', () => {
+    pageTopBtn.classList.toggle('visible', window.scrollY > 600);
+});
+pageTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
