@@ -1004,6 +1004,21 @@
         letter-spacing: 0.05em;
         font-weight: normal;
     }
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 20px;
+        font-size: 12px;
+    }
+    .footer-links a {
+        color: #999;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    .footer-links a:hover {
+        color: #fff;
+    }
     .copyright {
         text-align: center;
         margin-top: 20px;
@@ -1084,7 +1099,8 @@
         .social-link { padding: 6px 14px; gap: 6px; }
         .social-link svg { width: 18px; height: 18px; }
         .social-text { font-size: 13px; }
-        
+        .footer-links { gap: 15px; font-size: 11px; }
+
         .promo-section { display: block; }
         .promo-banner { 
             width: 100% !important; 
