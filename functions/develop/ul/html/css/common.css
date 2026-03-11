@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Rokkitt:ital,wght@0,100..900;1,100..900&family=Sawarabi+Gothic&display=swap");
+/* ===== 変数 ===== */
+:root {
+  /* --- カラー --- */
+  --color-primary: #66391f;
+  --color-primary-dark: #432107;
+  --color-gold: #aa8e50;
+  --color-gold-dark: #c88d42;
+  --color-gold-border: #b38e5a;
+  --color-gold-gradient-start: #b8956a;
+  --color-gold-gradient-end: #8b5a2b;
+  --color-green: #288036;
+  --color-green-logo: #6eba38;
+  --color-green-accent: #7ab929;
+  --color-green-light: #89b34a;
+  --color-red: #df0522;
+  --color-red-dark: #b7282c;
+  --color-yellow: #fdd000;
+  --color-sub-text: #ab8f72;
+  --color-brown-muted: #8b7355;
+  --color-brown-light: #d4a574;
+  --color-text-body: #555;
+  --color-text-muted: #666;
+  --color-text-dark: #333;
+  --color-border: #eee8e2;
+  --color-bg-cream: #faf8f5;
+  --color-bg-warm: #f9f6f3;
+  --color-bg-campaign: #fdf5f5;
+
+  /* --- フォント --- */
+  --font-rokkitt: "Rokkitt", serif;
+  --font-sawarabi-gothic: "Sawarabi Gothic", sans-serif;
+  /* --- グラデーション --- */
+  --gradient-gold: linear-gradient(
+    to right,
+    var(--color-gold-gradient-start),
+    var(--color-gold-gradient-end)
+  );
+}
+
+/* ===== 表示切り替えユーティリティ ===== */
+@media (max-width: 768px) {
+  .pc-only {
+    display: none !important;
+  }
+}
+
+.sp-only {
+  display: none !important;
+}
+@media (max-width: 768px) {
+  .sp-only {
+    display: block !important;
+  }
+}
+
+/* ===== スクロールフェードイン ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== ホバーで浮き上がる ===== */
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+}
+
+/* アニメーション無効設定を尊重 */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_レイヤー_2" data-name="レイヤー 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.63 13.57">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: .75px;
+      }
+
+      .cls-2 {
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <g id="_文字" data-name="文字">
+    <g>
+      <line class="cls-1" y1="6.3" x2="25" y2="6.3"/>
+      <polyline class="cls-2" points="16.25 13.28 25 6.3 16.25 .31"/>
+    </g>
+  </g>
+</svg>
