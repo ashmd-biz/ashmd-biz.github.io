@@ -629,6 +629,10 @@ section[id="contact"] {
     margin-bottom: 20px;
 }
 
+.contact-info p {
+    color: #ffffff;
+}
+
 .contact-details {
     margin-top: 40px;
 }
@@ -642,7 +646,11 @@ section[id="contact"] {
 
 .contact-item i {
     font-size: 20px;
-    color: var(--accent-color);
+    color: #ffffff;
+}
+
+.contact-item span {
+    color: #ffffff;
 }
 
 .contact-form {
