@@ -413,6 +413,14 @@ section[id^="service-"] {
     scroll-margin-top: 100px;
 }
 
+#service-reservation .section-title,
+#service-shopify .section-title,
+#service-eccube .section-title,
+#service-wordpress .section-title,
+#service-support .section-title {
+    margin-top: 70px;
+}
+
 section[id="about"],
 section[id="contact"] {
     scroll-margin-top: 100px;
