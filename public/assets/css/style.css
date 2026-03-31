@@ -322,6 +322,18 @@ body {
     margin-bottom: 40px;
 }
 
+.hero .btn-primary {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+
+.hero .btn-primary:hover {
+    background: #ffffff;
+    color: #000000;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
 .btn {
     display: inline-flex;
     align-items: center;
