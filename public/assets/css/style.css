@@ -394,7 +394,7 @@ body {
    ============================================ */
 .services {
     padding: 100px 0;
-    background: var(--background-light);
+    background: #ffffff;
     position: relative;
     overflow: hidden;
 }
