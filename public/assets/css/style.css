@@ -43,7 +43,7 @@ body {
 
 .container {
     max-width: 1200px;
-    margin: 40px auto;
+    margin: 28px auto;
     padding: 0 20px;
 }
 
@@ -71,7 +71,7 @@ body {
 }
 
 .header.at-top .company-name {
-    background: var(--primary-color);
+    background: #ffffff;
     -webkit-background-clip: text;
     background-clip: text;
 }
@@ -86,7 +86,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
+    height: 64px;
 }
 
 /* Logo styles */
@@ -192,7 +192,7 @@ body {
     }
     
     header .container {
-        margin: 20px auto;
+        margin: 14px auto;
     }
     
     .nav {
