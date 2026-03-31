@@ -43,7 +43,7 @@ body {
 
 .container {
     max-width: 1200px;
-    margin: 28px auto;
+    margin: 20px auto;
     padding: 0 20px;
 }
 
@@ -90,7 +90,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 64px;
+    height: 56px;
 }
 
 /* Logo styles */
@@ -109,7 +109,7 @@ body {
 }
 
 .logo-image {
-    height: 40px;
+    height: 34px;
     width: auto;
 }
 
@@ -196,7 +196,7 @@ body {
     }
     
     header .container {
-        margin: 14px auto;
+        margin: 10px auto;
     }
     
     .nav {
@@ -208,7 +208,7 @@ body {
     }
     
     .logo-image {
-        height: 40px;
+        height: 34px;
     }
     
     .logo-text-jp {
