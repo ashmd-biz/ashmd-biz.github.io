@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="Achievement 04">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B0B0B"/>
+      <stop offset="0.5" stop-color="#2C2C2C"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g opacity="0.92">
+    <rect x="210" y="190" width="1180" height="520" rx="44" fill="#ffffff"/>
+    <g transform="translate(280 260)">
+      <rect x="0" y="0" width="520" height="360" rx="28" fill="#1A1A1A"/>
+      <rect x="46" y="46" width="300" height="24" rx="12" fill="#FFD700"/>
+      <rect x="46" y="92" width="380" height="18" rx="9" fill="#ffffff" opacity="0.22"/>
+      <rect x="46" y="126" width="340" height="18" rx="9" fill="#ffffff" opacity="0.22"/>
+      <rect x="46" y="160" width="260" height="18" rx="9" fill="#ffffff" opacity="0.22"/>
+      <circle cx="408" cy="262" r="56" fill="#FFD700"/>
+      <path d="M396 262h36l-16 16 16 16h-36l16-16-16-16z" fill="#1A1A1A"/>
+    </g>
+    <g transform="translate(860 270)">
+      <rect x="0" y="0" width="470" height="30" rx="15" fill="#1A1A1A" opacity="0.85"/>
+      <rect x="0" y="56" width="420" height="18" rx="9" fill="#1A1A1A" opacity="0.18"/>
+      <rect x="0" y="92" width="450" height="18" rx="9" fill="#1A1A1A" opacity="0.18"/>
+      <rect x="0" y="128" width="380" height="18" rx="9" fill="#1A1A1A" opacity="0.18"/>
+      <rect x="0" y="196" width="260" height="64" rx="32" fill="#1A1A1A"/>
+      <path d="M190 228h28l12 12-12 12h-28l12-12-12-12z" fill="#FFD700"/>
+    </g>
+  </g>
+</svg>
+

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="Achievement 02">
+  <defs>
+    <linearGradient id="bg" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFD700"/>
+      <stop offset="0.45" stop-color="#1A1A1A"/>
+      <stop offset="1" stop-color="#0B0B0B"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g opacity="0.18">
+    <path d="M0 640c260-120 520-120 780 0s520 120 820 0v260H0V640z" fill="#ffffff"/>
+  </g>
+  <g opacity="0.92">
+    <rect x="250" y="220" width="1100" height="520" rx="36" fill="#ffffff"/>
+    <rect x="310" y="290" width="420" height="44" rx="22" fill="#1A1A1A" opacity="0.85"/>
+    <rect x="310" y="360" width="940" height="20" rx="10" fill="#1A1A1A" opacity="0.18"/>
+    <rect x="310" y="400" width="860" height="20" rx="10" fill="#1A1A1A" opacity="0.18"/>
+    <rect x="310" y="440" width="780" height="20" rx="10" fill="#1A1A1A" opacity="0.18"/>
+    <g transform="translate(930 300)">
+      <rect x="0" y="0" width="360" height="260" rx="24" fill="#1A1A1A"/>
+      <rect x="34" y="38" width="292" height="26" rx="13" fill="#FFD700" opacity="0.95"/>
+      <rect x="34" y="86" width="240" height="18" rx="9" fill="#ffffff" opacity="0.25"/>
+      <rect x="34" y="120" width="210" height="18" rx="9" fill="#ffffff" opacity="0.25"/>
+      <rect x="34" y="154" width="180" height="18" rx="9" fill="#ffffff" opacity="0.25"/>
+      <circle cx="300" cy="210" r="36" fill="#FFD700"/>
+      <path d="M290 210l18 0-8 8 8 8-18 0 8-8-8-8z" fill="#1A1A1A"/>
+    </g>
+  </g>
+</svg>
+

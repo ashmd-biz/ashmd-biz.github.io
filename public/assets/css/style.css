@@ -1077,4 +1077,113 @@ section[id="contact"] {
     margin-right: 10px;
     color: #4a6cf7;
 }
+
+/* ============================================
+   Achievements page
+   ============================================ */
+.achievements-page {
+    padding: 40px 0 80px;
+}
+
+.achievements-list {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+}
+
+.achievement-item {
+    background: #f2f2f2;
+    border-radius: 10px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    min-height: 320px;
+}
+
+.achievement-item.is-reversed {
+    grid-template-columns: 1fr 1.35fr;
+}
+
+.achievement-item.is-reversed .achievement-media {
+    order: 2;
+}
+
+.achievement-item.is-reversed .achievement-body {
+    order: 1;
+}
+
+.achievement-media {
+    background: #e9e9e9;
+    position: relative;
+}
+
+.achievement-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.achievement-body {
+    padding: 46px 46px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+}
+
+.achievement-body h3 {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.35;
+    color: var(--text-color);
+}
+
+.achievement-body p {
+    color: var(--text-light);
+    line-height: 1.8;
+}
+
+.achievement-cta {
+    margin-top: 10px;
+    width: fit-content;
+    background: #0b66d6;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 14px 22px;
+    border-radius: 6px;
+    font-weight: 700;
+    transition: var(--transition);
+    box-shadow: 0 10px 22px rgba(11, 102, 214, 0.25);
+}
+
+.achievement-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px rgba(11, 102, 214, 0.34);
+}
+
+@media (max-width: 900px) {
+    .achievement-item,
+    .achievement-item.is-reversed {
+        grid-template-columns: 1fr;
+    }
+
+    .achievement-item.is-reversed .achievement-media,
+    .achievement-item.is-reversed .achievement-body {
+        order: initial;
+    }
+
+    .achievement-body {
+        padding: 26px 24px 28px;
+    }
+
+    .achievement-item {
+        min-height: unset;
+    }
+
+    .achievement-media {
+        min-height: 220px;
+    }
+}
   

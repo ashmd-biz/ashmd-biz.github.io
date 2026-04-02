@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="Achievement 05">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.4" stop-color="#FFFDF7"/>
+      <stop offset="1" stop-color="#1A1A1A"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g opacity="0.85">
+    <circle cx="1240" cy="260" r="180" fill="#FFD700" filter="url(#glow)"/>
+    <circle cx="360" cy="660" r="220" fill="#FFD700" opacity="0.22"/>
+  </g>
+  <g opacity="0.92">
+    <rect x="240" y="200" width="1120" height="500" rx="44" fill="#ffffff"/>
+    <g transform="translate(320 280)">
+      <rect x="0" y="0" width="520" height="340" rx="28" fill="#1A1A1A"/>
+      <g transform="translate(60 70)">
+        <circle cx="80" cy="90" r="70" fill="#FFD700"/>
+        <circle cx="80" cy="90" r="38" fill="#1A1A1A" opacity="0.9"/>
+        <rect x="170" y="40" width="220" height="20" rx="10" fill="#ffffff" opacity="0.25"/>
+        <rect x="170" y="78" width="260" height="20" rx="10" fill="#ffffff" opacity="0.25"/>
+        <rect x="170" y="116" width="200" height="20" rx="10" fill="#ffffff" opacity="0.25"/>
+      </g>
+    </g>
+    <g transform="translate(910 300)">
+      <rect x="0" y="0" width="390" height="30" rx="15" fill="#1A1A1A" opacity="0.85"/>
+      <rect x="0" y="56" width="350" height="18" rx="9" fill="#1A1A1A" opacity="0.18"/>
+      <rect x="0" y="92" width="380" height="18" rx="9" fill="#1A1A1A" opacity="0.18"/>
+      <rect x="0" y="128" width="330" height="18" rx="9" fill="#1A1A1A" opacity="0.18"/>
+      <rect x="0" y="196" width="260" height="64" rx="32" fill="#FFD700"/>
+      <path d="M188 228h28l12 12-12 12h-28l12-12-12-12z" fill="#1A1A1A"/>
+    </g>
+  </g>
+</svg>
+
